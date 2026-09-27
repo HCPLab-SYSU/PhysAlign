@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "properties": {
+    "state": {
+      "enum": [
+        "unbuilt",
+        "pending_review",
+        "approved_nonempty",
+        "approved_empty",
+        "rejected"
+      ]
+    },
+    "observation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "empty_reason": {
+      "enum": [
+        "no_independent_readable_primitive",
+        "only_unsafe_binding_statement",
+        "family_policy_no_packet",
+        null
+      ]
+    },
+    "review_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "state",
+    "observation_ids",
+    "empty_reason",
+    "review_ref"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "approved_nonempty"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "observation_ids": {
+            "minItems": 1
+          },
+          "empty_reason": {
+            "type": "null"
+          },
+          "review_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "approved_empty"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "observation_ids": {
+            "maxItems": 0
+          },
+          "empty_reason": {
+            "enum": [
+              "no_independent_readable_primitive",
+              "only_unsafe_binding_statement",
+              "family_policy_no_packet"
+            ]
+          },
+          "review_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ],
+  "$id": "https://physalign.invalid/v2.1/schemas/packet_plan.schema.json"
+}
+

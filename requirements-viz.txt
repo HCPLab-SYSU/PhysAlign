@@ -1,0 +1,4 @@
+# CPU-only publication graphics; kept separate from inference dependencies.
+matplotlib==3.10.8
+numpy==2.2.6
+Pillow==11.3.0

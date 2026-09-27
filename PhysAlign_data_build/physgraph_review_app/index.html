@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="PhysGraph Observed-PhysGraph 本地盲化标注与审核工作台" />
+    <title>PhysGraph · G_obs 标注审核台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">PG</span>
+          <div><p>OBSERVED-PHYSGRAPH · V0.1</p><h1>标注审核台</h1></div>
+        </div>
+        <div class="safety-badge"><span></span>答案与解析已隔离</div>
+        <div class="header-progress"><strong id="approvedCount">0 / 515</strong><span>G_obs 已批准</span></div>
+        <label class="reviewer"><span>审核人</span><input id="reviewerInput" placeholder="例如：reviewer-01" /></label>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar">
+          <div class="filters">
+            <input id="searchInput" type="search" placeholder="搜索题号或题干" />
+            <div class="filter-row">
+              <select id="sourceFilter" aria-label="数据源"><option value="all">全部数据源</option></select>
+              <select id="statusFilter" aria-label="标注状态">
+                <option value="all">全部状态</option><option value="not_started">未开始</option>
+                <option value="in_progress">标注中</option><option value="has_errors">有错误</option>
+                <option value="approved">G_obs 已批准</option>
+              </select>
+              <select id="segmentFilter" aria-label="题目切分状态">
+                <option value="all">全部切分</option><option value="needs_review">切分待复核</option>
+                <option value="repair_pending_review">修复待确认</option><option value="machine_split">机器切分</option><option value="approved">人工确认</option>
+              </select>
+              <select id="repairFilter" aria-label="切分修复队列">
+                <option value="all">全部修复状态</option><option value="pending">受影响·待处理</option>
+                <option value="downstream_reannotation_required">待重做 Pass 2–4</option>
+                <option value="recovered_pending_review">已恢复·待复审</option><option value="resolved">修复已闭环</option>
+              </select>
+            </div>
+          </div>
+          <div id="listSummary" class="list-summary">读取盲化清单…</div>
+          <nav id="problemList" class="problem-list" aria-label="题目列表"></nav>
+        </aside>
+
+        <main class="main">
+          <div id="loadingState" class="center-state"><div class="spinner"></div><p>正在载入本地标注工作区…</p></div>
+          <div id="errorState" class="center-state hidden"><h2>工作区载入失败</h2><p id="errorMessage"></p></div>
+          <article id="workbench" class="workbench hidden">
+            <section class="problem-header">
+              <button id="prevButton" class="ghost-button" type="button">← 上一题</button>
+              <div><span id="problemPosition"></span><h2 id="problemId"></h2></div>
+              <div id="problemMeta" class="meta-row"></div>
+              <button id="nextButton" class="ghost-button" type="button">下一题 →</button>
+            </section>
+
+            <section class="safety-strip">
+              <strong>盲化边界已开启</strong>
+              <span>此页面与服务仅载入题图、题干、问题和选项；Pass 1–4 无法访问标准答案或解析。</span>
+            </section>
+            <section id="repairBanner" class="repair-banner hidden"></section>
+
+            <div class="work-grid">
+              <div class="evidence-column">
+                <section class="card question-card">
+                  <header><div><p class="eyebrow">BLIND INPUT</p><h3>题目切分</h3></div><span id="segmentBadge" class="status-pill"></span></header>
+                  <label><span>题干</span><textarea id="stemInput" rows="7"></textarea></label>
+                  <label><span>问题</span><textarea id="queryInput" rows="4"></textarea></label>
+                  <label><span>选项（每行 “A. 内容”）</span><textarea id="optionsInput" rows="5"></textarea></label>
+                  <div class="row-actions"><button id="saveSegments" class="secondary-button" type="button">确认题目切分</button><details><summary>查看清洗后的原题</summary><pre id="rawQuestion"></pre></details></div>
+                </section>
+
+                <section class="card image-card">
+                  <header>
+                    <div><p class="eyebrow">VISUAL EVIDENCE</p><h3>题图与坐标叠加</h3></div>
+                    <div class="image-toggles">
+                      <label class="toggle"><input id="overlayToggle" type="checkbox" checked /><span>显示节点</span></label>
+                      <label class="toggle edit-toggle"><input id="geometryEditToggle" type="checkbox" /><span>人工调整几何</span></label>
+                    </div>
+                  </header>
+                  <div id="imageTabs" class="image-tabs"></div>
+                  <div id="geometryToolbar" class="geometry-toolbar hidden">
+                    <strong id="selectedNodeLabel">尚未选择节点</strong>
+                    <span>选中后题图仅显示当前标注框；拖动框移动，拖动方块缩放，拖动圆点修改关键点。点击图像空白处或再次点击已选节点可恢复全部框。</span>
+                    <button id="undoGeometry" class="ghost-button" type="button" disabled>撤销</button>
+                    <button id="saveGeometry" class="secondary-button" type="button" disabled>保存并同步 Pass 4</button>
+                  </div>
+                  <div id="imageStage" class="image-stage"><img id="problemImage" alt="当前题图" /><canvas id="overlayCanvas"></canvas></div>
+                  <div id="nodeLegend" class="node-legend"></div>
+                </section>
+              </div>
+
+              <section class="card annotation-card">
+                <header class="annotation-heading"><div><p class="eyebrow">SEQUENTIAL ANNOTATION</p><h3>四阶段标注</h3></div><div id="stageStatus" class="status-pill"></div></header>
+                <div id="stageTabs" class="stage-tabs"></div>
+                <div class="stage-toolbar">
+                  <button id="copyPrompt" class="ghost-button" type="button">复制当前 Prompt</button>
+                  <a id="schemaLink" class="text-link" target="_blank">查看 JSON Schema</a>
+                  <span id="saveState" class="save-state"></span>
+                </div>
+                <details class="prompt-panel"><summary>核对盲化 Prompt</summary><div><h4>System Prompt</h4><pre id="systemPrompt"></pre><h4>当前阶段 Prompt</h4><pre id="taskPrompt"></pre></div></details>
+                <label class="json-editor-label"><span>JSON 标注结果</span><textarea id="jsonEditor" class="json-editor" spellcheck="false"></textarea></label>
+                <section id="validationPanel" class="validation-panel"></section>
+                <label class="review-note"><span>审核备注</span><input id="reviewNote" placeholder="可选：记录修改依据或退回原因" /></label>
+                <div class="annotation-actions">
+                  <button id="saveDraft" class="secondary-button" type="button">保存草稿</button>
+                  <button id="rejectStage" class="danger-button" type="button">退回</button>
+                  <button id="approveStage" class="primary-button" type="button">批准当前阶段</button>
+                </div>
+                <section id="pass5Gate" class="gate-card"><span class="gate-icon">5</span><div><strong>Pass 5 当前锁定</strong><p>只有 Pass 4 通过校验并由你批准后，才具备进入解答步骤对齐的资格；本服务仍不会读取答案。</p></div></section>
+              </section>
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js?v=geometry-focus-v1" defer></script>
+  </body>
+</html>

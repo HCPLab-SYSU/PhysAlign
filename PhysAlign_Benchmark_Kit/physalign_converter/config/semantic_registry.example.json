@@ -1,0 +1,159 @@
+{
+  "registry_version": "example_directional_v2_1",
+  "example_only": true,
+  "roles": [
+    {
+      "canonical_id": "force",
+      "label": {
+        "en": "force",
+        "zh": "力"
+      },
+      "status": "example_not_approved",
+      "review_ref": null
+    },
+    {
+      "canonical_id": "velocity",
+      "label": {
+        "en": "velocity",
+        "zh": "速度"
+      },
+      "status": "example_not_approved",
+      "review_ref": null
+    }
+  ],
+  "relations": [
+    {
+      "canonical_id": "acts_on",
+      "definition": {
+        "en": "An explicitly represented force acts on the receiving entity in the stated stage.",
+        "zh": "在明确阶段中，一个已表示的力作用于承受它的实体。"
+      },
+      "status": "example_not_approved",
+      "aliases": [
+        {
+          "source_namespace": "EXAMPLE_ONLY",
+          "raw_predicate": "acts_on",
+          "endpoint_transform": "identity"
+        },
+        {
+          "source_namespace": "EXAMPLE_ONLY",
+          "raw_predicate": "receives_force_from",
+          "endpoint_transform": "swap"
+        }
+      ],
+      "symmetric": false,
+      "subject_types": [
+        "force"
+      ],
+      "object_types": [
+        "body"
+      ],
+      "public_qualifiers": [
+        {
+          "qualifier_id": "stage",
+          "value_type": "enum",
+          "source": {
+            "collection": "relations",
+            "field_pointer": "/qualifiers/stage"
+          },
+          "required": true,
+          "enum_labels": {
+            "initial": {
+              "en": "the initial stage",
+              "zh": "初始阶段"
+            },
+            "later": {
+              "en": "the later stage",
+              "zh": "后续阶段"
+            }
+          },
+          "display_template": {
+            "en": "During {value}",
+            "zh": "在{value}"
+          }
+        }
+      ],
+      "queries": {
+        "object": {
+          "cardinality": "contextually_single",
+          "allowed_output": [
+            "one"
+          ],
+          "required_qualifier_ids": [
+            "stage"
+          ],
+          "uniqueness_preconditions": [
+            {
+              "source": {
+                "collection": "relations",
+                "field_pointer": "/qualifiers/single_recipient"
+              },
+              "operator": "equals",
+              "value": true
+            }
+          ],
+          "closure_requirement": "registered_unique_semantics_with_source_evidence",
+          "question": {
+            "en": {
+              "one": "{qualifiers}, which candidate entity does the force at {reference} act on?",
+              "set": "{qualifiers}, which candidate entities does the force at {reference} act on?"
+            },
+            "zh": {
+              "one": "{qualifiers}，参考位置 {reference} 所示的力作用于哪个候选实体？",
+              "set": "{qualifiers}，参考位置 {reference} 所示的力作用于哪些候选实体？"
+            }
+          }
+        },
+        "subject": {
+          "cardinality": "potentially_many",
+          "allowed_output": [
+            "one",
+            "set"
+          ],
+          "required_qualifier_ids": [
+            "stage"
+          ],
+          "uniqueness_preconditions": [],
+          "closure_requirement": "candidate_scope_complete_review",
+          "question": {
+            "en": {
+              "one": "{qualifiers}, which candidate force acts on the entity at {reference}?",
+              "set": "{qualifiers}, which candidate forces act on the entity at {reference}? Select all that apply."
+            },
+            "zh": {
+              "one": "{qualifiers}，哪个候选力作用于参考位置 {reference} 所示的实体？",
+              "set": "{qualifiers}，哪些候选力作用于参考位置 {reference} 所示的实体？请选择全部符合项。"
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "example_id": "force-to-body",
+          "polarity": "positive",
+          "basis": "synthetic",
+          "description": {
+            "en": "A source-annotated force with a single stated recipient at the initial stage.",
+            "zh": "源标注明确初始阶段某个力具有一个承受实体。"
+          },
+          "source_records": [],
+          "evidence_snapshot_hash": "3347dc06ddbc5045807c7e0453c6ca9faf02cefda5e5586875bd1b4eb9729a6d"
+        },
+        {
+          "example_id": "two-forces-one-body",
+          "polarity": "negative",
+          "basis": "synthetic",
+          "description": {
+            "en": "The inverse question can have two forces; unique recipient does not imply one force per body.",
+            "zh": "反向问题可以有两个力；承受者唯一不意味着每个物体只受一个力。"
+          },
+          "source_records": [],
+          "evidence_snapshot_hash": "624aa6c6d07ee459f2559335f369cedd4a65feb198fa6d256fe45d9230d12441"
+        }
+      ],
+      "review_ref": null
+    }
+  ],
+  "production_rule": "Examples demonstrate the contract, not aliases approved for the real dataset. Formal mode rejects this registry."
+}
+

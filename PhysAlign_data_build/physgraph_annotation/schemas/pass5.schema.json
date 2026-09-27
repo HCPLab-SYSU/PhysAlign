@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["problem_id", "solution_steps", "final_answer"],
+  "properties": {
+    "problem_id": {"type": "string"},
+    "solution_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "step_id", "text", "step_type", "uses_obs_node_ids",
+          "uses_obs_quantity_ids", "uses_obs_relation_ids",
+          "uses_obs_constraint_ids"
+        ],
+        "properties": {
+          "step_id": {"type": "string", "pattern": "^s\\d{3,}$"},
+          "text": {"type": "string", "minLength": 1},
+          "step_type": {
+            "enum": [
+              "read_given", "select_law", "define_variable", "form_equation",
+              "derive", "calculate", "case_analysis", "check", "conclude"
+            ]
+          },
+          "uses_obs_node_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "uses_obs_quantity_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "uses_obs_relation_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "uses_obs_constraint_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        }
+      }
+    },
+    "final_answer": {"type": "string"}
+  }
+}

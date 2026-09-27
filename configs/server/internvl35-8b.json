@@ -1,0 +1,11 @@
+{
+  "snapshot_manifest": "models/internvl35-8b.snapshot.json",
+  "gpu_count": 2,
+  "max_memory_gib": 18,
+  "dtype": "bfloat16",
+  "thinking": false,
+  "seed": 2027,
+  "max_input_tokens": 32768,
+  "max_new_tokens": 2048,
+  "processor_kwargs": {}
+}

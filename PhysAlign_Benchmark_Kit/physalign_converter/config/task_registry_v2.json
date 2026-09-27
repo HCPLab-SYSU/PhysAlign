@@ -1,0 +1,107 @@
+{
+  "T01": {
+    "family": "glyph_semantics",
+    "binding_key": "role",
+    "domain": "role",
+    "core_cardinality": "one",
+    "allowed_cardinalities": [
+      "one"
+    ],
+    "registry_required": "roles",
+    "joint_rule": "independent_glyph_reading_only",
+    "question": {
+      "zh": "锚点 {anchor} 所指定的图元表示哪一种物理实体或物理量？",
+      "en": "What physical entity or quantity does the primitive at {anchor} represent?"
+    }
+  },
+  "T02": {
+    "family": "object_reference",
+    "binding_key": "referent",
+    "domain": "entity",
+    "core_cardinality": "one",
+    "allowed_cardinalities": [
+      "one",
+      "set"
+    ],
+    "group_by": "resolved_text_span_and_visible_scope",
+    "registry_required": null,
+    "joint_rule": "binding_only_by_default",
+    "question": {
+      "zh": {
+        "one": "锚点 {anchor} 标出的这一处对象指代，对应图中哪个候选实体？",
+        "set": "锚点 {anchor} 标出的这一处对象指代，对应图中哪些候选实体？请选择全部符合项。"
+      },
+      "en": {
+        "one": "Which candidate entity in the diagram is referred to by the expression marked at {anchor}?",
+        "set": "Which candidate entities in the diagram are referred to by the expression marked at {anchor}? Select all that apply."
+      }
+    }
+  },
+  "T03": {
+    "family": "quantity_ownership",
+    "binding_key": "owner",
+    "domain": "entity",
+    "core_cardinality": "one",
+    "allowed_cardinalities": [
+      "one"
+    ],
+    "group_by": "quantity_anchor_and_visible_qualifiers",
+    "registry_required": null,
+    "joint_rule": "independent_image_literal",
+    "question": {
+      "zh": "锚点 {anchor} 所指定的物理量直接归属于哪个候选物理实体？",
+      "en": "Which candidate physical entity directly owns the quantity specified at {anchor}?"
+    }
+  },
+  "T04": {
+    "family": "condition_scope",
+    "binding_key": "subjects",
+    "domain": "entity",
+    "core_cardinality": "set",
+    "allowed_cardinalities": [
+      "set"
+    ],
+    "group_by": "condition_anchor_and_visible_scope",
+    "registry_required": null,
+    "joint_rule": "binding_only_unless_independent_image_reading",
+    "question": {
+      "zh": "锚点 {anchor} 所指定的条件直接适用于哪些候选实体？请选择全部符合项。",
+      "en": "To which candidate entities does the condition specified at {anchor} directly apply? Select all that apply."
+    }
+  },
+  "T05": {
+    "family": "relation_endpoints",
+    "binding_key": "endpoint",
+    "domain": "entity",
+    "core_cardinality": "one",
+    "allowed_cardinalities": [
+      "one",
+      "set"
+    ],
+    "group_by": "canonical_predicate_missing_side_fixed_endpoint_visible_qualifiers",
+    "registry_required": "relations",
+    "joint_rule": "binding_only_unless_independent_image_reading",
+    "question_source": "registered_predicate.localized_endpoint_question",
+    "free_relation_expression_allowed": false
+  },
+  "T06": {
+    "family": "evidence_retrieval",
+    "binding_key": "evidence",
+    "domain": "evidence",
+    "core_enabled": false,
+    "allowed_cardinalities": [
+      "one",
+      "set"
+    ],
+    "registry_required": "evidence_scope_review",
+    "joint_rule": "binding_only",
+    "question": {
+      "zh": "给定观测事实：{fact}。请选择能够直接支持该事实的候选证据单元。",
+      "en": "Given the observed fact: {fact}. Select the candidate evidence unit or units that directly support this fact."
+    },
+    "no_standalone_anchors": true,
+    "no_reference_views": true,
+    "packet_policy": "approved_empty"
+  }
+}
+

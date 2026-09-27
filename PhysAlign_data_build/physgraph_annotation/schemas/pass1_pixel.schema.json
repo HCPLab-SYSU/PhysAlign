@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "problem_id", "image_id", "panel_id", "coordinate_space",
+    "source_width_px", "source_height_px", "crop_origin_px", "crop_size_px",
+    "visual_nodes", "ambiguities"
+  ],
+  "properties": {
+    "problem_id": {"type": "string"},
+    "image_id": {"type": "string"},
+    "panel_id": {"type": "string"},
+    "coordinate_space": {"const": "crop_pixels"},
+    "source_width_px": {"type": "integer", "minimum": 1},
+    "source_height_px": {"type": "integer", "minimum": 1},
+    "crop_origin_px": {
+      "type": "array", "items": {"type": "integer", "minimum": 0},
+      "minItems": 2, "maxItems": 2
+    },
+    "crop_size_px": {
+      "type": "array", "items": {"type": "integer", "minimum": 1},
+      "minItems": 2, "maxItems": 2
+    },
+    "visual_nodes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/pixel_node"}},
+    "ambiguities": {"type": "array", "items": {"$ref": "#/$defs/ambiguity"}}
+  },
+  "$defs": {
+    "pixel_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "type", "subtype", "text", "bbox_px", "keypoints_px",
+        "center_px", "radius_px", "confidence"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "type": {"enum": [
+          "text_glyph", "point_mark", "line_segment", "polyline", "curve",
+          "circle", "arc", "arrow", "angle_mark", "region", "axis",
+          "graph_curve", "object_shape", "component_symbol", "field_symbol",
+          "unknown_visual"
+        ]},
+        "subtype": {"type": "string"},
+        "text": {"type": "string"},
+        "bbox_px": {
+          "type": "array", "items": {"type": "integer", "minimum": 0},
+          "minItems": 4, "maxItems": 4
+        },
+        "keypoints_px": {
+          "type": "array",
+          "items": {
+            "type": "array", "items": {"type": "integer", "minimum": 0},
+            "minItems": 2, "maxItems": 2
+          }
+        },
+        "center_px": {
+          "type": "array", "items": {"type": "integer", "minimum": -1},
+          "minItems": 2, "maxItems": 2
+        },
+        "radius_px": {"type": "integer", "minimum": -1},
+        "confidence": {"enum": ["high", "medium", "low"]}
+      }
+    },
+    "ambiguity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "scope", "description", "candidate_ids", "evidence_visual_ids", "evidence_mention_ids"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "scope": {"type": "string"},
+        "description": {"type": "string", "minLength": 1},
+        "candidate_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "evidence_visual_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "evidence_mention_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    }
+  }
+}

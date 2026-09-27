@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "physgraph-annotation-pipeline"
+version = "0.2.0"
+description = "Portable, answer-blind PhysGraph annotation and review framework for multimodal physics datasets"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {file = "LICENSE"}
+dependencies = [
+  "numpy>=1.26,<3",
+  "Pillow>=10,<13",
+]
+
+[project.optional-dependencies]
+api = ["httpx>=0.27,<1", "openai>=1.68,<3"]
+dev = ["httpx>=0.27,<1", "openai>=1.68,<3", "pytest>=8,<10"]
+
+[project.scripts]
+physgraph-pipeline = "physgraph_pipeline.cli:main"
+
+[tool.setuptools]
+packages = ["physgraph_pipeline", "physgraph_legacy", "physgraph_annotation", "physgraph_review_app"]
+include-package-data = false
+
+[tool.setuptools.package-dir]
+physgraph_legacy = "scripts"
+
+[tool.setuptools.package-data]
+physgraph_annotation = ["prompts/*.txt", "schemas/*.json"]
+physgraph_review_app = ["*.html", "*.css", "*.js"]

@@ -1,0 +1,7 @@
+{
+  "jobs": [
+    {"name": "qwen35-9b", "gpus": [0, 1], "config": "configs/server/qwen35-9b.json"},
+    {"name": "qwen35-27b", "gpus": [2, 3, 4, 5], "config": "configs/server/qwen35-27b.json"},
+    {"name": "internvl35-8b", "gpus": [6, 7], "config": "configs/server/internvl35-8b.json"}
+  ]
+}

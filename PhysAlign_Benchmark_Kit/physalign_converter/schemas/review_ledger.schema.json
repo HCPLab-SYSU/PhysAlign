@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "physalign_review_ledger_v2_1"
+    },
+    "example_only": {
+      "type": "boolean"
+    },
+    "records": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "review_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "observation",
+              "packet",
+              "semantic_entry",
+              "query_closure",
+              "instance"
+            ]
+          },
+          "content_root": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "status": {
+            "enum": [
+              "approved",
+              "pending",
+              "rejected"
+            ]
+          },
+          "reviewer": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "review_id",
+          "kind",
+          "content_root",
+          "status",
+          "reviewer",
+          "evidence_refs"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "example_only",
+    "records"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://physalign.invalid/v2.1/schemas/review_ledger.schema.json"
+}
+

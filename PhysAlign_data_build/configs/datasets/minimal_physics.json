@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "dataset": {
+    "name": "minimal-physics-demo",
+    "records": "../../examples/minimal_physics/annotations.jsonl",
+    "format": "jsonl",
+    "media_root": "../../examples/minimal_physics",
+    "fields": {
+      "id": "/id",
+      "images": "/images",
+      "question": "/question",
+      "stem": "/stem",
+      "query": "/query",
+      "options": "/options",
+      "metadata_images": "/metadata/question_images",
+      "source_split": "/metadata/split",
+      "language": "/metadata/language"
+    }
+  },
+  "annotation": {
+    "workspace": "../../tmp/minimal_physics_workspace",
+    "prompt_dir": "../../physgraph_annotation/prompts",
+    "model_policy": {
+      "passes_1_to_4": "configured OpenAI-compatible multimodal model",
+      "answers_visible": false
+    }
+  }
+}

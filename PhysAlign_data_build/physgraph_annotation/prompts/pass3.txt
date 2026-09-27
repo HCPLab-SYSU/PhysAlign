@@ -1,0 +1,40 @@
+任务阶段：PASS_3_TEXT_GROUNDING
+
+题干：
+{stem}
+
+问题：
+{query}
+
+选项：
+{options}
+
+已有 physical nodes：
+{pass2_physical_nodes}
+
+当前任务：
+
+1. 只从 stem 和 query 中抽取 text_mentions；
+2. 不从 options 中抽取任何图事实；
+3. 对每个 mention 保留题干精确原文 quote；
+4. 将题干 mention 绑定到已有 physical node；
+5. 对仅在题干中出现、图中没有表示的实体，可以创建 TEXT-only physical node；
+6. 提取题干明确给出的物理量；
+7. 提取题干明确给出的约束；
+8. 提取 query_target；
+9. 不求解；
+10. 不从常识补全条件；
+11. 不从答案或选项推断条件；
+12. 不创建 DERIVED 或 CONSTRUCTED 节点。
+
+仅输出：
+{
+  "problem_id": "...",
+  "new_or_updated_physical_nodes": [...],
+  "text_mentions": [...],
+  "quantities": [...],
+  "bindings": [...],
+  "constraints": [...],
+  "query_target": {...},
+  "ambiguities": [...]
+}

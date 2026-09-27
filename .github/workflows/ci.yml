@@ -1,0 +1,47 @@
+name: Framework checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: python -m pip install -r requirements-test.txt -e "./PhysAlign_data_build[dev]" build
+      - run: python -m unittest discover -s tests -v
+      - run: python -m unittest discover -s server_eval/tests -v
+      - run: python -m unittest discover -s PhysAlign_Benchmark_Kit/physalign_converter/tests -v
+      - run: python -m unittest discover -s PhysAlign_Benchmark_Kit/tests -v
+      - run: python PhysAlign_Benchmark_Kit/tools/share_kit.py verify
+      - run: python -m pytest -q
+        working-directory: PhysAlign_data_build
+      - run: node PhysAlign_data_build/tests/test_physgraph_geometry_focus.js
+      - run: node tests/test_leaderboard.js
+      - run: python scripts/build_readme.py --check
+      - run: python PhysAlign_data_build/scripts/audit_release.py
+      - run: python -m build
+        working-directory: PhysAlign_data_build
+      - shell: bash
+        run: |
+          python -m pip uninstall -y physgraph-annotation-pipeline
+          python -m pip install PhysAlign_data_build/dist/*.whl
+          cd "${RUNNER_TEMP}"
+          python "${GITHUB_WORKSPACE}/PhysAlign_data_build/tests/smoke_installed.py"

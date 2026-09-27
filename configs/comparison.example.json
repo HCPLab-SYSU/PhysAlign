@@ -1,0 +1,6 @@
+{
+  "plan": "plans/evaluation.json",
+  "runs": ["runs/model-a", "runs/model-b"],
+  "labels": {"model-a-id": "Model A", "model-b-id": "Model B"},
+  "output": "figures/comparison"
+}

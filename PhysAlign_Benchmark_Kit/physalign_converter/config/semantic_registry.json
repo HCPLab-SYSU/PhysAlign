@@ -1,0 +1,8 @@
+{
+  "registry_version": "team_registry_v1",
+  "example_only": false,
+  "roles": [],
+  "relations": [],
+  "production_rule": "Only separately approved exact entries; unknown entries block their task."
+}
+

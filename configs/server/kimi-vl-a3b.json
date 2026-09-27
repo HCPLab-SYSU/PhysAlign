@@ -1,0 +1,15 @@
+{
+  "snapshot_manifest": "models/kimi-vl-a3b.snapshot.json",
+  "gpu_count": 2,
+  "max_memory_gib": 18,
+  "dtype": "bfloat16",
+  "attn_implementation": "flash_attention_2",
+  "thinking": false,
+  "seed": 2027,
+  "max_input_tokens": 32768,
+  "max_new_tokens": 2048,
+  "processor_kwargs": {
+    "in_token_limit": 1024
+  },
+  "processor_call_kwargs": {}
+}

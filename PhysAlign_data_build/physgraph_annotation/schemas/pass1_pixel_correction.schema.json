@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "problem_id", "image_id", "panel_id", "coordinate_space",
+    "verdict", "operations", "summary"
+  ],
+  "properties": {
+    "problem_id": {"type": "string"},
+    "image_id": {"type": "string"},
+    "panel_id": {"type": "string"},
+    "coordinate_space": {"const": "crop_pixels"},
+    "verdict": {"enum": ["accept", "correct"]},
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["action", "target_id", "node", "reason"],
+        "properties": {
+          "action": {"enum": ["replace", "delete", "append"]},
+          "target_id": {"type": "string"},
+          "node": {"oneOf": [{"type": "null"}, {"$ref": "pass1_pixel.schema.json#/$defs/pixel_node"}]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "summary": {"type": "string"}
+  }
+}

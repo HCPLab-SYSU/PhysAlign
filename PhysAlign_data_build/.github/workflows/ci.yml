@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+        include:
+          - os: windows-latest
+            python-version: "3.12"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pytest -q
+      - run: python scripts/audit_release.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: node tests/test_physgraph_geometry_focus.js
+      - run: python -m pip install build
+      - run: python -m build
+      - shell: bash
+        run: |
+          python -m pip uninstall -y physgraph-annotation-pipeline
+          python -m pip install dist/*.whl
+          cd "${RUNNER_TEMP}"
+          python "${GITHUB_WORKSPACE}/tests/smoke_installed.py"

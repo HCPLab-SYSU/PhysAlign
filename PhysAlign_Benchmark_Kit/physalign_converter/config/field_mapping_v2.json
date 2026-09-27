@@ -1,0 +1,57 @@
+[
+  {
+    "source": "text_mentions.section/quote/occurrence",
+    "normalized": "ResolvedSpan",
+    "public": "text locator excerpt and R alias",
+    "private": "source text hash, original occurrence, all match spans, repair sidecar"
+  },
+  {
+    "source": "visual_nodes.image_id + bbox_1000/keypoints/center/radius",
+    "normalized": "VisualLocator + AssetRecord",
+    "public": "R/E/H locator and actually attached rendered view",
+    "private": "source visual IDs, original asset hashes, renderer transform"
+  },
+  {
+    "source": "all refers_to bindings sharing one resolved visible mention",
+    "normalized": "GroupedReferenceQuery",
+    "public": "T02 one or set QA",
+    "private": "ALL source binding/mention IDs, complete canonical target set"
+  },
+  {
+    "source": "quantities.owner_id and anchored quantity evidence",
+    "normalized": "QuantityOwnerQuery",
+    "public": "T03 QA and optional read",
+    "private": "quantity IDs, raw ownership target, observation refs"
+  },
+  {
+    "source": "constraints.subject_ids and exact condition anchor",
+    "normalized": "ConditionScopeQuery",
+    "public": "T04 set QA",
+    "private": "constraint IDs, complete target set; raw kind retained for metadata"
+  },
+  {
+    "source": "relations.predicate/subject_id/object_id and approved qualifiers",
+    "normalized": "RegisteredRelationQuery",
+    "public": "registered localized endpoint question",
+    "private": "raw aliases, canonical predicate, transform, ALL edges, closure review"
+  },
+  {
+    "source": "represents -> physical_nodes.type",
+    "normalized": "RegisteredRoleQuery",
+    "public": "T01 and labels looked up from role registry",
+    "private": "bindings and approved role code"
+  },
+  {
+    "source": "observational fact evidence references",
+    "normalized": "EvidenceScopeQuery",
+    "public": "T06 extension only; symmetric candidate evidence views",
+    "private": "complete candidate-scope evidence judgement, no guessed negatives"
+  },
+  {
+    "source": "Pass5 uses_obs_*",
+    "normalized": "AnalysisOnly",
+    "public": null,
+    "private": "source-fact use references, not a required-facts label"
+  }
+]
+

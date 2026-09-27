@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PhysAlign paper baselines: recognition, evidence-grounded role alignment, and original-problem solving across six multimodal models." />
+  <title>PhysAlign · Model Leaderboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script id="baseline-data" type="application/json">@@DATA@@</script>
+  <script src="leaderboard-core.js" defer></script>
+  <script src="leaderboard.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to results</a>
+  <div class="wrap">
+    <header class="nav">
+      <a class="brand" href="@@PROJECT@@" aria-label="PhysAlign project page">
+        <svg viewBox="0 0 40 30" fill="none" aria-hidden="true"><circle cx="11" cy="15" r="9" stroke="currentColor" stroke-width="1.4"/><circle cx="29" cy="15" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M11 2v6m18-6v6M11 22v6m18-6v6M11 15h18" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="15" r="2" fill="currentColor"/><circle cx="29" cy="15" r="2" fill="currentColor"/></svg>
+        PhysAlign
+      </a>
+      <nav class="nav-links" aria-label="Project resources">
+        <a class="nav-dataset" href="@@DATASET@@">Dataset ↗</a>
+        <a href="@@PROJECT@@">Project ↗</a>
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Use light theme" aria-pressed="false" disabled>Light theme</button>
+      </nav>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow"><i aria-hidden="true"></i> PhysAlign / Paper baseline results</div>
+          <h1 id="page-title">The grounding gap,<br /><span>measured.</span></h1>
+          <p class="lede">A correct reading is only the beginning. Evaluate whether multimodal models connect local evidence to the right physical role.</p>
+          <p class="hero-note">Six models · Manuscript Table 2 · Development and test combined</p>
+        </div>
+        <figure class="hero-figure">
+          <a href="../assets/figure-1-grounding.png" aria-label="Open original manuscript Figure 1 at full resolution"><img src="../assets/figure-1-grounding.png" width="2142" height="966" alt="Original manuscript Figure 1: correct symbol recognition can coexist with incorrect grounding to a physical entity." /></a>
+          <figcaption>Manuscript Figure 1 · View original figure ↗</figcaption>
+        </figure>
+      </section>
+
+      <div class="stats" aria-label="Benchmark scope">
+        <div class="stat"><strong>3,341</strong><span>Localized probes</span></div>
+        <div class="stat"><strong>986</strong><span>Parent physics problems</span></div>
+        <div class="stat"><strong>553</strong><span>Eligible +GT variants</span></div>
+        <div class="stat"><strong>6</strong><span>Evaluated models</span></div>
+      </div>
+
+      <section id="results" aria-labelledby="results-title">
+        <div class="section-heading"><h2 id="results-title">Model leaderboard</h2><span class="snapshot">MANUSCRIPT SNAPSHOT</span></div>
+        <div class="board">
+          <div class="board-top">
+            <div class="view-switch" role="group" aria-label="Results view">
+              <button type="button" data-view="core" class="active" aria-pressed="true" disabled>Core metrics</button>
+              <button type="button" data-view="paired" aria-pressed="false" disabled>+GT reading control</button>
+            </div>
+            <a class="data-link" href="results.json" download="physalign-paper-baselines.json">↓ Results JSON</a>
+          </div>
+          <div class="toolbar">
+            <div class="search-field"><label for="model-search">Find a model</label><input type="search" id="model-search" placeholder="Search six paper baselines…" autocomplete="off" disabled /></div>
+            <div class="filter-field"><label for="access-filter">Model access</label><select id="access-filter" disabled><option value="all">All models</option><option value="open_weights">Open weights</option><option value="api">API models</option></select></div>
+            <div class="metric-field"><label for="metric-picker">Rank by</label><select id="metric-picker" disabled><option value="gacc_all">GAcc · all probes</option><option value="cacc">CAcc · recognition</option><option value="gacc_joint">GAcc · joint set</option><option value="jacc">JAcc · joint correctness</option><option value="solve_acc">SolveAcc · solving</option></select></div>
+          </div>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Model results; scroll horizontally on small screens">
+            <table>
+              <caption class="sr-only">PhysAlign paper baselines. Scores are percentages; higher is better. Default ranking: GAcc over all grounding probes.</caption>
+              <thead id="result-head">@@TABLE_HEAD@@</thead>
+              <tbody id="result-rows">@@TABLE_ROWS@@</tbody>
+            </table>
+          </div>
+          <div class="table-footer"><p id="result-count">6 of 6 models</p><p id="table-caption">Ranked by overall grounding. Ranks stay global when filtering.</p></div>
+        </div>
+
+        <div class="protocol" id="core-notes">
+          <h3>One table. Distinct evaluation populations.</h3>
+          <p><strong>GAcc:</strong> 3,341 probes / 986 parents. <strong>CAcc, GAcc (L), JAcc:</strong> 412 probes / 311 parents. <strong>SolveAcc:</strong> mean normalized problem credit over 986 parents, not binary accuracy. Local metrics use parent-balanced, task-type-weighted aggregation. Highlighted cells are column maxima; ranks describe point estimates, not statistical significance.</p>
+        </div>
+        <div class="protocol" id="paired-notes" hidden>
+          <h3>Compare Base → +GT within a model.</h3>
+          <p>+GT supplies verified local readings while withholding the target role. Open-weight models have <strong>412 observed paired probes / 311 parents</strong>; API models have <strong>397 / 304</strong>. These differ from the 553 eligible variants. Δ is the paper's independently rounded change in percentage points. Positive aggregate changes do not imply gains on every probe or a perfect-perception upper bound.</p>
+        </div>
+        <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+        <noscript><p class="protocol">The default GAcc ranking remains available without JavaScript. Enable JavaScript for filtering, alternative rankings, the paired view, and theme switching.</p></noscript>
+      </section>
+
+      <section class="scope-grid" aria-label="Metric interpretation">
+        <article><span class="scope-label">01 / RECOGNITION</span><h3>Read the local content.</h3><p>CAcc measures correct recognition at a specified evidence anchor. Reading the right symbol does not by itself establish its physical role.</p></article>
+        <article><span class="scope-label">02 / GROUNDING</span><h3>Identify the physical role.</h3><p>GAcc evaluates the reported entity or quantity owner. JAcc requires correct recognition and grounding on the same local probe.</p></article>
+        <article><span class="scope-label">03 / CONTROL</span><h3>Supply the reading, keep the task.</h3><p>The paired +GT condition changes only the provided local readings. Anchors, question, candidates, and scoring rules remain fixed.</p></article>
+      </section>
+    </main>
+    <footer class="footer"><p>PhysAlign · Paper-reported baselines, not live community submissions.</p><p><a href="@@ARXIV@@">arXiv · @@ARXIV_STATUS@@</a> &nbsp; / &nbsp; <a href="../../README.md">Repository README</a> &nbsp; / &nbsp; <a href="README.md">Data &amp; scope notes</a></p></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "contract_version": "observed_ir_adapter_v2",
+  "implemented_here": true,
+  "implementation": "adapter.py:SourceAdapter",
+  "supported_visual_projection": "explicit_source_bbox_only",
+  "read_only": true,
+  "not_accepted_as_proof": [
+    "files_exist",
+    "audit=true",
+    "pass4_validator_returns_zero_errors_alone"
+  ],
+  "required_local_verifications": [
+    "actual_binding_endpoint_keys",
+    "review_state_layout_and_chain",
+    "current_reviewed_text_sections",
+    "occurrence_matching_semantics",
+    "source_image_path_resolution",
+    "source_schema_and_validator_versions",
+    "all_relevant_binding_edges_enumerated_before_filtering"
+  ],
+  "outputs": [
+    "source_snapshot",
+    "review_snapshot",
+    "exact_context",
+    "image_assets",
+    "normalized_visual_nodes",
+    "normalized_physical_nodes",
+    "normalized_mentions",
+    "normalized_bindings",
+    "normalized_quantities",
+    "normalized_constraints",
+    "normalized_relations",
+    "field_source_pointers",
+    "unresolved_fields_report"
+  ],
+  "no_source_mutation": true,
+  "missing_fact_policy": "unknown_or_block_never_infer",
+  "answer_or_solution_input_allowed": false,
+  "local_fixtures_required": [
+    "unique_invalid_occurrence",
+    "ambiguous_invalid_occurrence",
+    "multi_target_plural_mention",
+    "directed_relation",
+    "overlapping_visual_entities",
+    "image_path_resolution",
+    "approved_hash_but_invalid_span",
+    "real_en_problem",
+    "real_zh_problem"
+  ]
+}

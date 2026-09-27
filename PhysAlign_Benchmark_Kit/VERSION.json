@@ -1,0 +1,13 @@
+{
+  "kit_version": "physalign_benchmark_kit_v1.1.0",
+  "converter_version": "physalign_converter_v1.2.0_native_draft",
+  "profile": "native_binding_draft_v1",
+  "stage": "native_draft_review_and_data_release_no_model_evaluation",
+  "release_tools_version": "native_data_release_v1",
+  "included_interfaces": ["T02-single", "T03-image", "T03-text"],
+  "real_data_included": false,
+  "model_calls_included": false,
+  "batch_approval_and_formal_release_implemented": true,
+  "real_data_auto_approved_or_exported": false,
+  "core_relocation_policy": "preserve_original_converter_bytes_and_existing_draft_fingerprints"
+}

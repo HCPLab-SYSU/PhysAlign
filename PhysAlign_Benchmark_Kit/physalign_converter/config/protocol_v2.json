@@ -1,0 +1,131 @@
+{
+  "protocol_version": "physalign_v2.1.0",
+  "status": "data_converter_v1_compatible_with_physalign_v2_1_no_evaluation_runtime",
+  "source_mutation_allowed": false,
+  "source_adapter_verified": true,
+  "evaluation_implementation_included": false,
+  "source_statistics_basis": "runtime_inventory_not_historical_counts",
+  "language_policy": "source_matched_v1",
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "core_variants": [
+    "T01-one",
+    "T02-one",
+    "T03-one",
+    "T04-set",
+    "T05-one"
+  ],
+  "disabled_until_separate_approval": [
+    "T02-set",
+    "T05-set",
+    "T06"
+  ],
+  "text_anchor": {
+    "offset_unit": "unicode_code_point",
+    "interval": "zero_based_half_open",
+    "source_normalization": "none",
+    "matching_rule": "literal_nonoverlap_1based_v1",
+    "requires_source_semantics_compatibility_check": true,
+    "unique_repair_policy": "unique_exact_sidecar_v1",
+    "unique_repair_policy_status": "requires_project_approval",
+    "ambiguous_repair": "review_or_local_block"
+  },
+  "candidates": {
+    "default_T02_T03": "all_legally_displayable_visual_entities_in_problem",
+    "minimum": 2,
+    "fixed_K": null,
+    "target_type_based_filter_allowed": false,
+    "unsupported_display": "block_probe",
+    "selection_seed": 2027
+  },
+  "packet": {
+    "terminal_states": [
+      "approved_nonempty",
+      "approved_empty"
+    ],
+    "nonterminal_states": [
+      "unbuilt",
+      "pending_review",
+      "rejected"
+    ],
+    "empty_reasons": [
+      "no_independent_readable_primitive",
+      "only_unsafe_binding_statement",
+      "family_policy_no_packet"
+    ],
+    "derive_text_from": "approved_observation_store_same_source_version_and_position",
+    "T06_policy": "approved_empty_only_when_T06_extension_is_approved"
+  },
+  "freeze": {
+    "recursive_allowlists": true,
+    "exact_span_gate": true,
+    "source_hash_checks": true,
+    "asset_decode_and_hash_checks": true,
+    "role_registry_check": true,
+    "relation_registry_check": true,
+    "rendered_instance_audit": true,
+    "audit_bound_to_content_root": true,
+    "duplicate_logical_id": "error",
+    "existing_output_directory": "error",
+    "staging_and_publish": "validate_all_then_publish_new_release",
+    "observation_origin_alignment": true,
+    "direction_specific_relation_contract": true
+  },
+  "identifiers": {
+    "logical_probe_id": "source_query_identity_without_content_or_seed",
+    "instance_id": "content_root_and_review_snapshot_digest",
+    "release_id": "sorted_instance_and_partition_and_policy_digest",
+    "hashes_visible_to_model": false,
+    "variant_id": "required_private_key_and_identical_outer_envelope_copy"
+  },
+  "aggregation": {
+    "pools": [
+      "B",
+      "L",
+      "P",
+      "LP"
+    ],
+    "type_weights": "equal_over_pool_types_frozen_before_model_runs",
+    "within_type": "mean_within_problem_then_mean_across_problems",
+    "infrastructure_missing": "keep_planned_denominator_and_report_bounds",
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 2027,
+    "bootstrap_unit": "problem_or_predeclared_larger_duplicate_cluster",
+    "missing_type_replicate": "undefined_and_withhold_pooled_ci",
+    "normalize_type_weights_after_model_output": false,
+    "output_states": {
+      "completed": "field_independent",
+      "unparseable": "all_applicable_zero",
+      "refusal": "all_applicable_zero",
+      "truncated": "all_applicable_zero",
+      "infra_missing": "all_scores_null_fixed_denominator"
+    }
+  },
+  "execution": {
+    "one_probe_per_context": true,
+    "raw_gold_independent_contexts": true,
+    "infra_retries_max": 2,
+    "retry_semantic_failures": false,
+    "keep_empty_packet_pairs_independent": true,
+    "development_problem_target": [
+      50,
+      80
+    ]
+  },
+  "normalization": {
+    "profiles": [
+      "ocr_literal_v2_1",
+      "ocr_label_v2_1"
+    ],
+    "default_T03_image_label": "ocr_label_v2_1",
+    "alias_case": "sensitive",
+    "alias_outer_whitespace": "strip",
+    "multi_anchor_C": "all_required_anchors_correct_exact_key_set",
+    "extra_top_level_fields": "ignore_and_log",
+    "extra_read_anchor_fields": "C_zero_B_independent",
+    "unit_conversion": "not_implemented_not_allowed",
+    "unsupported_gold_profile": "export_error"
+  }
+}

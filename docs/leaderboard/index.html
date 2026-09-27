@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PhysAlign paper baselines: recognition, evidence-grounded role alignment, and original-problem solving across six multimodal models." />
+  <title>PhysAlign · Model Leaderboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script id="baseline-data" type="application/json">{"schema_version":1,"title":"PhysAlign: A Benchmark for Evidence-Grounded Role Alignment in Multimodal Physics Reasoning","source":{"kind":"paper_baseline","table":2,"page":7,"snapshot_date":"2026-09-27","status":"Manuscript results; not a live submission leaderboard","evaluation_partition":"Development and test combined","rounding":"Values are transcribed from Table 2. Paired deltas are independently rounded in the paper."},"links":{"arxiv":"https://arxiv.org/abs/XXXX.XXXXX","arxiv_is_placeholder":true,"dataset":"https://huggingface.co/datasets/Jetson888/PhysAlign","project":"https://physalign-lab.github.io/"},"populations":{"all":{"symbol":"G","parents":986,"probes":3341},"joint":{"symbol":"L","parents":311,"probes":412},"paired_eligible":{"symbol":"P","parents":385,"probes":553},"solving":{"parents":986},"release":{"source_datasets":6,"development":{"parents":79,"probes":208,"paired_variants":90},"test":{"parents":907,"probes":3133,"paired_variants":463}}},"default_ranking":"gacc_all","metrics":[{"key":"gacc_all","label":"GAcc","scope":"All · G","population":"all","unit":"percent","higher_is_better":true},{"key":"cacc","label":"CAcc","scope":"Joint set · L","population":"joint","unit":"percent","higher_is_better":true},{"key":"gacc_joint","label":"GAcc (L)","scope":"Joint set · L","population":"joint","unit":"percent","higher_is_better":true},{"key":"jacc","label":"JAcc","scope":"Joint set · L","population":"joint","unit":"percent","higher_is_better":true},{"key":"solve_acc","label":"SolveAcc","scope":"986 problems","population":"solving","unit":"percent_normalized_credit","higher_is_better":true}],"models":[{"id":"qwen3.5-4b","name":"Qwen3.5-4B","family":"Qwen","access":"open_weights","gacc_all":40.21,"cacc":53.97,"gacc_joint":46.51,"jacc":32.09,"solve_acc":9.94,"paired":{"base":46.51,"gt":54.61,"delta_pp":8.1,"parents":311,"probes":412}},{"id":"qwen3.5-9b","name":"Qwen3.5-9B","family":"Qwen","access":"open_weights","gacc_all":40.52,"cacc":65.81,"gacc_joint":54.55,"jacc":37.55,"solve_acc":12.12,"paired":{"base":54.55,"gt":56.53,"delta_pp":1.98,"parents":311,"probes":412}},{"id":"qwen3.5-27b","name":"Qwen3.5-27B","family":"Qwen","access":"open_weights","gacc_all":84.11,"cacc":84.14,"gacc_joint":80.29,"jacc":68.12,"solve_acc":18.39,"paired":{"base":80.29,"gt":82.0,"delta_pp":1.71,"parents":311,"probes":412}},{"id":"internvl3.5-8b","name":"InternVL3.5-8B","family":"InternVL","access":"open_weights","gacc_all":23.52,"cacc":2.12,"gacc_joint":33.36,"jacc":1.05,"solve_acc":7.47,"paired":{"base":33.36,"gt":34.81,"delta_pp":1.45,"parents":311,"probes":412}},{"id":"gpt-6-astra","name":"GPT-6 Astra","family":"GPT","access":"api","gacc_all":81.94,"cacc":89.44,"gacc_joint":83.31,"jacc":77.13,"solve_acc":71.72,"paired":{"base":83.59,"gt":84.9,"delta_pp":1.32,"parents":304,"probes":397}},{"id":"gemini-3.8-flash","name":"Gemini 3.8 Flash","family":"Gemini","access":"api","gacc_all":90.71,"cacc":85.2,"gacc_joint":79.33,"jacc":70.59,"solve_acc":21.31,"paired":{"base":78.67,"gt":80.86,"delta_pp":2.2,"parents":304,"probes":397}}]}</script>
+  <script src="leaderboard-core.js" defer></script>
+  <script src="leaderboard.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to results</a>
+  <div class="wrap">
+    <header class="nav">
+      <a class="brand" href="https://physalign-lab.github.io/" aria-label="PhysAlign project page">
+        <svg viewBox="0 0 40 30" fill="none" aria-hidden="true"><circle cx="11" cy="15" r="9" stroke="currentColor" stroke-width="1.4"/><circle cx="29" cy="15" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M11 2v6m18-6v6M11 22v6m18-6v6M11 15h18" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="15" r="2" fill="currentColor"/><circle cx="29" cy="15" r="2" fill="currentColor"/></svg>
+        PhysAlign
+      </a>
+      <nav class="nav-links" aria-label="Project resources">
+        <a class="nav-dataset" href="https://huggingface.co/datasets/Jetson888/PhysAlign">Dataset ↗</a>
+        <a href="https://physalign-lab.github.io/">Project ↗</a>
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Use light theme" aria-pressed="false" disabled>Light theme</button>
+      </nav>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow"><i aria-hidden="true"></i> PhysAlign / Paper baseline results</div>
+          <h1 id="page-title">The grounding gap,<br /><span>measured.</span></h1>
+          <p class="lede">A correct reading is only the beginning. Evaluate whether multimodal models connect local evidence to the right physical role.</p>
+          <p class="hero-note">Six models · Manuscript Table 2 · Development and test combined</p>
+        </div>
+        <figure class="hero-figure">
+          <a href="../assets/figure-1-grounding.png" aria-label="Open original manuscript Figure 1 at full resolution"><img src="../assets/figure-1-grounding.png" width="2142" height="966" alt="Original manuscript Figure 1: correct symbol recognition can coexist with incorrect grounding to a physical entity." /></a>
+          <figcaption>Manuscript Figure 1 · View original figure ↗</figcaption>
+        </figure>
+      </section>
+
+      <div class="stats" aria-label="Benchmark scope">
+        <div class="stat"><strong>3,341</strong><span>Localized probes</span></div>
+        <div class="stat"><strong>986</strong><span>Parent physics problems</span></div>
+        <div class="stat"><strong>553</strong><span>Eligible +GT variants</span></div>
+        <div class="stat"><strong>6</strong><span>Evaluated models</span></div>
+      </div>
+
+      <section id="results" aria-labelledby="results-title">
+        <div class="section-heading"><h2 id="results-title">Model leaderboard</h2><span class="snapshot">MANUSCRIPT SNAPSHOT</span></div>
+        <div class="board">
+          <div class="board-top">
+            <div class="view-switch" role="group" aria-label="Results view">
+              <button type="button" data-view="core" class="active" aria-pressed="true" disabled>Core metrics</button>
+              <button type="button" data-view="paired" aria-pressed="false" disabled>+GT reading control</button>
+            </div>
+            <a class="data-link" href="results.json" download="physalign-paper-baselines.json">↓ Results JSON</a>
+          </div>
+          <div class="toolbar">
+            <div class="search-field"><label for="model-search">Find a model</label><input type="search" id="model-search" placeholder="Search six paper baselines…" autocomplete="off" disabled /></div>
+            <div class="filter-field"><label for="access-filter">Model access</label><select id="access-filter" disabled><option value="all">All models</option><option value="open_weights">Open weights</option><option value="api">API models</option></select></div>
+            <div class="metric-field"><label for="metric-picker">Rank by</label><select id="metric-picker" disabled><option value="gacc_all">GAcc · all probes</option><option value="cacc">CAcc · recognition</option><option value="gacc_joint">GAcc · joint set</option><option value="jacc">JAcc · joint correctness</option><option value="solve_acc">SolveAcc · solving</option></select></div>
+          </div>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Model results; scroll horizontally on small screens">
+            <table>
+              <caption class="sr-only">PhysAlign paper baselines. Scores are percentages; higher is better. Default ranking: GAcc over all grounding probes.</caption>
+              <thead id="result-head"><tr><th scope="col" class="rank-col">Rank</th><th scope="col" class="model-col">Model</th><th scope="col" class="numeric selected" aria-sort="descending"><button type="button" data-sort="gacc_all">GAcc ↓<small>All · G</small></button></th><th scope="col" class="numeric" aria-sort="none"><button type="button" data-sort="cacc">CAcc ↑<small>Joint set · L</small></button></th><th scope="col" class="numeric" aria-sort="none"><button type="button" data-sort="gacc_joint">GAcc (L) ↑<small>Joint set · L</small></button></th><th scope="col" class="numeric" aria-sort="none"><button type="button" data-sort="jacc">JAcc ↑<small>Joint set · L</small></button></th><th scope="col" class="numeric" aria-sort="none"><button type="button" data-sort="solve_acc">SolveAcc ↑<small>986 problems</small></button></th></tr></thead>
+              <tbody id="result-rows"><tr><td class="rank-col"><span class="rank top-rank">01</span></td><td class="model-cell"><span class="model-name">Gemini 3.8 Flash</span><span class="access api">API</span></td><td class="numeric selected best"><span class="score">90.71</span><span class="score-bar" aria-hidden="true"><i style="width:90.71%"></i></span></td><td class="numeric"><span class="score">85.20</span></td><td class="numeric"><span class="score">79.33</span></td><td class="numeric"><span class="score">70.59</span></td><td class="numeric"><span class="score">21.31</span></td></tr>
+<tr><td class="rank-col"><span class="rank top-rank">02</span></td><td class="model-cell"><span class="model-name">Qwen3.5-27B</span><span class="access open">Open weights</span></td><td class="numeric selected"><span class="score">84.11</span><span class="score-bar" aria-hidden="true"><i style="width:84.11%"></i></span></td><td class="numeric"><span class="score">84.14</span></td><td class="numeric"><span class="score">80.29</span></td><td class="numeric"><span class="score">68.12</span></td><td class="numeric"><span class="score">18.39</span></td></tr>
+<tr><td class="rank-col"><span class="rank top-rank">03</span></td><td class="model-cell"><span class="model-name">GPT-6 Astra</span><span class="access api">API</span></td><td class="numeric selected"><span class="score">81.94</span><span class="score-bar" aria-hidden="true"><i style="width:81.94%"></i></span></td><td class="numeric best"><span class="score">89.44</span></td><td class="numeric best"><span class="score">83.31</span></td><td class="numeric best"><span class="score">77.13</span></td><td class="numeric best"><span class="score">71.72</span></td></tr>
+<tr><td class="rank-col"><span class="rank">04</span></td><td class="model-cell"><span class="model-name">Qwen3.5-9B</span><span class="access open">Open weights</span></td><td class="numeric selected"><span class="score">40.52</span><span class="score-bar" aria-hidden="true"><i style="width:40.52%"></i></span></td><td class="numeric"><span class="score">65.81</span></td><td class="numeric"><span class="score">54.55</span></td><td class="numeric"><span class="score">37.55</span></td><td class="numeric"><span class="score">12.12</span></td></tr>
+<tr><td class="rank-col"><span class="rank">05</span></td><td class="model-cell"><span class="model-name">Qwen3.5-4B</span><span class="access open">Open weights</span></td><td class="numeric selected"><span class="score">40.21</span><span class="score-bar" aria-hidden="true"><i style="width:40.21%"></i></span></td><td class="numeric"><span class="score">53.97</span></td><td class="numeric"><span class="score">46.51</span></td><td class="numeric"><span class="score">32.09</span></td><td class="numeric"><span class="score">9.94</span></td></tr>
+<tr><td class="rank-col"><span class="rank">06</span></td><td class="model-cell"><span class="model-name">InternVL3.5-8B</span><span class="access open">Open weights</span></td><td class="numeric selected"><span class="score">23.52</span><span class="score-bar" aria-hidden="true"><i style="width:23.52%"></i></span></td><td class="numeric"><span class="score">2.12</span></td><td class="numeric"><span class="score">33.36</span></td><td class="numeric"><span class="score">1.05</span></td><td class="numeric"><span class="score">7.47</span></td></tr></tbody>
+            </table>
+          </div>
+          <div class="table-footer"><p id="result-count">6 of 6 models</p><p id="table-caption">Ranked by overall grounding. Ranks stay global when filtering.</p></div>
+        </div>
+
+        <div class="protocol" id="core-notes">
+          <h3>One table. Distinct evaluation populations.</h3>
+          <p><strong>GAcc:</strong> 3,341 probes / 986 parents. <strong>CAcc, GAcc (L), JAcc:</strong> 412 probes / 311 parents. <strong>SolveAcc:</strong> mean normalized problem credit over 986 parents, not binary accuracy. Local metrics use parent-balanced, task-type-weighted aggregation. Highlighted cells are column maxima; ranks describe point estimates, not statistical significance.</p>
+        </div>
+        <div class="protocol" id="paired-notes" hidden>
+          <h3>Compare Base → +GT within a model.</h3>
+          <p>+GT supplies verified local readings while withholding the target role. Open-weight models have <strong>412 observed paired probes / 311 parents</strong>; API models have <strong>397 / 304</strong>. These differ from the 553 eligible variants. Δ is the paper's independently rounded change in percentage points. Positive aggregate changes do not imply gains on every probe or a perfect-perception upper bound.</p>
+        </div>
+        <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+        <noscript><p class="protocol">The default GAcc ranking remains available without JavaScript. Enable JavaScript for filtering, alternative rankings, the paired view, and theme switching.</p></noscript>
+      </section>
+
+      <section class="scope-grid" aria-label="Metric interpretation">
+        <article><span class="scope-label">01 / RECOGNITION</span><h3>Read the local content.</h3><p>CAcc measures correct recognition at a specified evidence anchor. Reading the right symbol does not by itself establish its physical role.</p></article>
+        <article><span class="scope-label">02 / GROUNDING</span><h3>Identify the physical role.</h3><p>GAcc evaluates the reported entity or quantity owner. JAcc requires correct recognition and grounding on the same local probe.</p></article>
+        <article><span class="scope-label">03 / CONTROL</span><h3>Supply the reading, keep the task.</h3><p>The paired +GT condition changes only the provided local readings. Anchors, question, candidates, and scoring rules remain fixed.</p></article>
+      </section>
+    </main>
+    <footer class="footer"><p>PhysAlign · Paper-reported baselines, not live community submissions.</p><p><a href="https://arxiv.org/abs/XXXX.XXXXX">arXiv · coming soon (placeholder)</a> &nbsp; / &nbsp; <a href="../../README.md">Repository README</a> &nbsp; / &nbsp; <a href="README.md">Data &amp; scope notes</a></p></footer>
+  </div>
+</body>
+</html>

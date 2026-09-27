@@ -1,0 +1,41 @@
+{
+  "policy_version": "packet_selection_v2.0.0",
+  "status": "proposed_frozen_defaults_require_project_adoption",
+  "default_by_task": {
+    "T01": "all_atomic_glyphs_in_presented_diagrams_v1",
+    "T02": "all_atomic_glyphs_in_presented_diagrams_v1",
+    "T03": "target_literal_only_v1",
+    "T04": "all_atomic_glyphs_in_presented_diagrams_v1",
+    "T05": "all_atomic_glyphs_in_presented_diagrams_v1",
+    "T06": "empty_extension_only"
+  },
+  "target_literal_only_v1": {
+    "source": "approved_requested_independent_image_observation",
+    "candidate_side_readings": false,
+    "still_requires_family_permission_audit": true
+  },
+  "all_atomic_glyphs_in_presented_diagrams_v1": {
+    "source_kind": "text_glyph",
+    "asset_role": "diagram",
+    "exclude_option_assets": true,
+    "scope": "all_presented_source_diagram_images",
+    "approval_required": true,
+    "lexical_selection": "fullmatch_any_pattern_on_stripped_copy_keep_payload_exact",
+    "patterns": [
+      "[A-Za-zΑ-Ωα-ω](?:[0-9]{1,2}|_[A-Za-z0-9]|_\\{[A-Za-z0-9]{1,2}\\})?",
+      "[甲乙丙丁戊己庚辛壬癸]",
+      "[+\\-−]?(?:[0-9]+(?:\\.[0-9]+)?|\\.[0-9]+)(?:\\s*(?:kg|g|m|cm|mm|s|N|T|A|V|C|J|W|Ω|m/s|m/s²))?",
+      "\\\\(?:alpha|beta|gamma|theta|phi|omega|mu|sigma|epsilon)(?:_[A-Za-z0-9]|_\\{[A-Za-z0-9]{1,2}\\})?",
+      "[+\\-−]"
+    ],
+    "order": "stable_observation_id",
+    "max_entries": 64,
+    "overflow": "PACKET_BUDGET_EXCEEDED",
+    "truncate": false,
+    "gold_target_links_allowed_in_selection": false,
+    "still_requires_family_permission_audit": true
+  },
+  "empty_handling": "Do not infer approved_empty from zero selected entries; store enumeration/filter reasons and obtain a content-bound approval. Missing source observations and not-yet-built packets remain unresolved.",
+  "grammar_boundary": "Unlisted long/equational labels are policy-filtered, not declared unreadable or incorrect. Widening this grammar changes the policy version."
+}
+

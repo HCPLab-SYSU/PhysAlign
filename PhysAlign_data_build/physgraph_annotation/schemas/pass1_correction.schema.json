@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["problem_id", "verdict", "operations", "summary"],
+  "properties": {
+    "problem_id": {"type": "string"},
+    "verdict": {"enum": ["accept", "correct"]},
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "target_id", "node", "reason"],
+        "properties": {
+          "action": {"enum": ["replace", "delete", "append"]},
+          "target_id": {"type": "string"},
+          "node": {
+            "oneOf": [
+              {"type": "null"},
+              {"$ref": "#/$defs/visual_node"}
+            ]
+          },
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "summary": {"type": "string"}
+  },
+  "$defs": {
+    "visual_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "type", "subtype", "text", "image_id", "bbox_1000",
+        "keypoints_1000", "center_1000", "radius_1000", "confidence"
+      ],
+      "properties": {
+        "id": {"type": "string"},
+        "type": {
+          "enum": [
+            "text_glyph", "point_mark", "line_segment", "polyline", "curve",
+            "circle", "arc", "arrow", "angle_mark", "region", "axis",
+            "graph_curve", "object_shape", "component_symbol", "field_symbol",
+            "unknown_visual"
+          ]
+        },
+        "subtype": {"type": "string"},
+        "text": {"type": "string"},
+        "image_id": {"type": "string"},
+        "bbox_1000": {
+          "type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 1000},
+          "minItems": 4, "maxItems": 4
+        },
+        "keypoints_1000": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {"type": "integer", "minimum": 0, "maximum": 1000},
+            "minItems": 2, "maxItems": 2
+          }
+        },
+        "center_1000": {
+          "type": "array", "items": {"type": "integer", "minimum": -1, "maximum": 1000},
+          "minItems": 2, "maxItems": 2
+        },
+        "radius_1000": {"type": "integer", "minimum": -1, "maximum": 1000},
+        "confidence": {"enum": ["high", "medium", "low"]}
+      }
+    }
+  }
+}

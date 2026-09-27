@@ -1,0 +1,1 @@
+{"note":"SYNTHETIC TEST FIXTURE. Approval records are programmatic stubs, not human or model reviews.","record_root":"28630614c292755f09c478b348e659bf1635d3b4c9a0b0c83da29401af629b37","response":{"checks":{"packet_no_binding_leakage":{"status":"pass"}},"verdict":"pass"},"synthetic":true}

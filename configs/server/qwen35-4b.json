@@ -1,0 +1,17 @@
+{
+  "snapshot_manifest": "models/qwen35-4b.snapshot.json",
+  "gpu_count": 1,
+  "max_memory_gib": 18,
+  "dtype": "bfloat16",
+  "thinking": false,
+  "seed": 2027,
+  "max_input_tokens": 32768,
+  "max_new_tokens": 2048,
+  "processor_kwargs": {},
+  "processor_call_kwargs": {
+    "images_kwargs": {
+      "min_pixels": 65536,
+      "max_pixels": 262144
+    }
+  }
+}

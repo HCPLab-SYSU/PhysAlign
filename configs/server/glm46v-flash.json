@@ -1,0 +1,20 @@
+{
+  "snapshot_manifest": "models/glm46v-flash.snapshot.json",
+  "gpu_count": 2,
+  "max_memory_gib": 18,
+  "dtype": "bfloat16",
+  "attn_implementation": "sdpa",
+  "thinking": false,
+  "seed": 2027,
+  "max_input_tokens": 32768,
+  "max_new_tokens": 2048,
+  "processor_kwargs": {},
+  "processor_call_kwargs": {
+    "images_kwargs": {
+      "size": {
+        "shortest_edge": 100352,
+        "longest_edge": 401408
+      }
+    }
+  }
+}

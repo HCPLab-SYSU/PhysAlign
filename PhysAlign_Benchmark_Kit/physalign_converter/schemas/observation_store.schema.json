@@ -1,0 +1,115 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "physalign_observations_v2_1"
+    },
+    "observations": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "observation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "approved",
+              "pending",
+              "rejected"
+            ]
+          },
+          "origin": {
+            "type": "object",
+            "properties": {
+              "locator": {
+                "$ref": "view_bundle.schema.json#/$defs/locator"
+              },
+              "source_version": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "locator",
+              "source_version"
+            ],
+            "additionalProperties": false
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "source_records": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "collection": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "record_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target_field": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_file_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "collection",
+                "record_id",
+                "target_field",
+                "source_file_sha256"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          },
+          "source_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset_role": {
+            "enum": [
+              "diagram",
+              "option",
+              "text"
+            ]
+          },
+          "review_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "observation_id",
+          "state",
+          "origin",
+          "text",
+          "source_records",
+          "source_kind",
+          "asset_role",
+          "review_ref"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "observations"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://physalign.invalid/v2.1/schemas/observation_store.schema.json"
+}
+

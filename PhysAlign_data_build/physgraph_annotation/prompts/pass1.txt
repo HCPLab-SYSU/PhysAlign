@@ -1,0 +1,51 @@
+任务阶段：PASS_1_VISUAL_EXTRACTION
+
+问题编号：
+{problem_id}
+
+题干：
+{stem}
+
+问题：
+{query}
+
+选项仅供识别图片上下文，不得将选项内容写入图事实：
+{options}
+
+当前任务：
+
+1. 识别题图中所有与解题可能相关的视觉图元；
+2. 识别图中文字、字母、数字、公式和单位；
+3. 为每个视觉图元给出归一化 bbox；
+4. 对线段、箭头、轨迹、曲线给出关键点；
+5. 不创建 physical_nodes；
+6. 不创建 quantities；
+7. 不创建物理关系；
+8. 不解释图中对象的物理作用；
+9. 视觉上无法确认的内容写入 ambiguities。
+
+视觉类型只允许：
+
+text_glyph
+point_mark
+line_segment
+polyline
+curve
+circle
+arc
+arrow
+angle_mark
+region
+axis
+graph_curve
+object_shape
+component_symbol
+field_symbol
+unknown_visual
+
+仅输出：
+{
+  "problem_id": "...",
+  "visual_nodes": [...],
+  "ambiguities": [...]
+}

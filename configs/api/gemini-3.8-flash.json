@@ -1,0 +1,12 @@
+{
+  "model_id": "gemini-3.8-flash",
+  "base_url": "https://api.example.invalid/v1",
+  "api_key_env": "PHYSALIGN_GEMINI_API_KEY",
+  "max_output_tokens": 8192,
+  "token_limit_field": "max_tokens",
+  "reasoning_effort": null,
+  "temperature": 0,
+  "image_detail": "auto",
+  "timeout_seconds": 300,
+  "retry_delay_seconds": 5
+}

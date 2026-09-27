@@ -1,0 +1,410 @@
+{
+  "type": "object",
+  "properties": {
+    "task_id": {
+      "enum": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06"
+      ]
+    },
+    "language": {
+      "enum": [
+        "en",
+        "zh"
+      ]
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "stem": {
+          "type": "string"
+        },
+        "query": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "image_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "stem",
+        "query",
+        "options",
+        "image_ids"
+      ],
+      "additionalProperties": false
+    },
+    "anchors": {
+      "type": "object",
+      "patternProperties": {
+        "^R[1-9][0-9]*$": {
+          "$ref": "#/$defs/locator"
+        }
+      },
+      "additionalProperties": false
+    },
+    "query_anchor_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "read_anchor_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reference_views": {
+      "type": "object",
+      "patternProperties": {
+        "^H[1-9][0-9]*$": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/locator"
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "used_reference_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "alias": {
+                "type": "string",
+                "pattern": "^E[1-9][0-9]*$"
+              },
+              "kind": {
+                "const": "role"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "alias",
+              "kind",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "alias": {
+                "type": "string",
+                "pattern": "^E[1-9][0-9]*$"
+              },
+              "kind": {
+                "enum": [
+                  "entity",
+                  "evidence"
+                ]
+              },
+              "locators": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/locator"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "alias",
+              "kind",
+              "locators"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "minItems": 2
+    },
+    "recognition_packet": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "anchor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "required": [
+          "anchor",
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "task_id",
+    "language",
+    "context",
+    "anchors",
+    "query_anchor_ids",
+    "read_anchor_ids",
+    "reference_views",
+    "used_reference_ids",
+    "candidates",
+    "recognition_packet"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PhysAlign validation-layer view bundle (NOT a model prompt; strip hashes when rendering)",
+  "$defs": {
+    "geometry": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "bbox"
+            },
+            "bbox_1000": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "minItems": 4,
+              "maxItems": 4
+            }
+          },
+          "required": [
+            "type",
+            "bbox_1000"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "point"
+            },
+            "xy_1000": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "required": [
+            "type",
+            "xy_1000"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "polyline"
+            },
+            "points_1000": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "minItems": 2
+            }
+          },
+          "required": [
+            "type",
+            "points_1000"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "polygon"
+            },
+            "points_1000": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "minItems": 3
+            }
+          },
+          "required": [
+            "type",
+            "points_1000"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "circle"
+            },
+            "center_1000": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "radius_1000_min_dim": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "type",
+            "center_1000",
+            "radius_1000_min_dim"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "locator": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "visual"
+            },
+            "image_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "geometry": {
+              "$ref": "#/$defs/geometry"
+            }
+          },
+          "required": [
+            "kind",
+            "image_id",
+            "geometry"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "text"
+            },
+            "section": {
+              "enum": [
+                "stem",
+                "query"
+              ]
+            },
+            "start": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "end": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "section_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "section",
+            "start",
+            "end",
+            "quote",
+            "section_sha256"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$comment": "Cross-field existence, source hashes, disambiguation, literal equality and all semantic gates require runtime checks. Do not serialize the whole bundle to a model.",
+  "$id": "https://physalign.invalid/v2.1/schemas/view_bundle.schema.json"
+}
+

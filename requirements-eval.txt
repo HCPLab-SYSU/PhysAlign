@@ -1,0 +1,15 @@
+# Install a CUDA-enabled PyTorch/torchvision pair for the server driver first.
+# These are a frozen reference environment, not a claim of a GPU benchmark here.
+transformers==5.17.0
+accelerate==1.15.0
+Pillow==11.3.0
+safetensors>=0.4.3,<1
+# Required by the frozen custom-code checkpoints below.  Molmo2 image
+# preprocessing imports einops; Kimi-VL's tokenizer imports tiktoken.
+einops>=0.7,<1
+tiktoken>=0.7,<1
+ninja>=1.11,<2
+packaging>=24,<27
+psutil>=5,<8
+# Kimi-VL additionally needs FlashAttention-2.  Install it after CUDA PyTorch
+# with: python -m pip install flash-attn==2.8.3.post1 --no-build-isolation

@@ -1,0 +1,1 @@
+{"matching":"literal_nonoverlap_1based_v1","operation":"use_the_only_exact_character_span_without_modifying_source","policy_id":"unique_exact_sidecar_v1","preconditions":["positive_integer_occurrence_out_of_range","nonempty_quote_exactly_once_in_current_exact_section"]}

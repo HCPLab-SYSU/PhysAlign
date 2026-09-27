@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "physalign_envelope_v2_1"
+    },
+    "logical_probe_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "enum": [
+        "en",
+        "zh"
+      ]
+    },
+    "content_root": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "public_raw_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "public_gold_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "private_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "logical_probe_id",
+    "variant_id",
+    "instance_id",
+    "language",
+    "content_root",
+    "public_raw_hash",
+    "public_gold_hash",
+    "private_hash"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://physalign.invalid/v2.1/schemas/instance_envelope.schema.json"
+}
+

@@ -1,0 +1,11 @@
+* text=auto eol=lf
+
+# Frozen examples and converter provenance use hashes of exact file bytes.
+# Preserve these bytes on every checkout, including Windows with autocrlf.
+/examples/synthetic/** -text
+/PhysAlign_Benchmark_Kit/** -text
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary

@@ -1,0 +1,12 @@
+{
+  "model_id": "gpt-6-astra",
+  "base_url": "https://api.example.invalid/v1",
+  "api_key_env": "PHYSALIGN_GPT_API_KEY",
+  "max_output_tokens": 16384,
+  "token_limit_field": "max_completion_tokens",
+  "reasoning_effort": "high",
+  "temperature": null,
+  "image_detail": "auto",
+  "timeout_seconds": 300,
+  "retry_delay_seconds": 5
+}

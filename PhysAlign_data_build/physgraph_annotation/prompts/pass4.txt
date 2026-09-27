@@ -1,0 +1,61 @@
+任务阶段：PASS_4_OBSERVED_GRAPH_ASSEMBLY
+
+题干：
+{stem}
+
+问题：
+{query}
+
+PASS 1：
+{pass1_json}
+
+PASS 2：
+{pass2_json}
+
+PASS 3：
+{pass3_json}
+
+当前任务：
+
+1. 合并前面三个阶段；
+2. 创建仅由 IMAGE 或 TEXT 直接支持的 observed relations；
+3. 每个 relation 必须提供：
+   - subject_id
+   - predicate
+   - object_id
+   - provenance
+   - evidence_visual_ids
+   - evidence_mention_ids
+4. 删除重复节点和重复关系；
+5. 不合并 text_glyph、visual shape 和 physical entity；
+6. 检查所有 ID 引用是否存在；
+7. 检查 provenance 与 evidence 是否一致；
+8. 检查是否错误使用了选项内容；
+9. 检查是否存在推导泄漏；
+10. 不输出答案和解题过程。
+
+以下内容均属于推导泄漏，必须删除：
+
+- 未画出的重力、支持力、摩擦力；
+- 根据运动状态推断出的加速度或合力；
+- 自动补出的圆心、轨迹半径、辅助线；
+- 根据几何外观推断出的精确平行、垂直、相等；
+- 根据正确选项或解析倒推出的关系；
+- 任何 DERIVED 或 CONSTRUCTED 节点。
+
+最终仅输出完整 Observed-PhysGraph：
+
+{
+  "schema_version": "physgraph_obs_v0.1",
+  "problem_id": "...",
+  "domain": "mechanics | electromagnetism | mixed",
+  "visual_nodes": [...],
+  "physical_nodes": [...],
+  "text_mentions": [...],
+  "quantities": [...],
+  "bindings": [...],
+  "relations": [...],
+  "constraints": [...],
+  "query_target": {...},
+  "ambiguities": [...]
+}

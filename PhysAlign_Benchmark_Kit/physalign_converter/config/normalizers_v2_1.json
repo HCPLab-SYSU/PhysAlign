@@ -1,0 +1,55 @@
+{
+  "normalizer_version": "v2_1",
+  "implementation": "reference_normalizers.py",
+  "literal": {
+    "id": "ocr_literal_v2_1",
+    "steps": [
+      "NFC",
+      "strip_outer_whitespace"
+    ],
+    "all_other_content": "preserve"
+  },
+  "label": {
+    "id": "ocr_label_v2_1",
+    "steps": [
+      "NFC",
+      "strip_outer_whitespace",
+      "unwrap_at_most_one_entire_math_delimiter_pair",
+      "unwrap_non_nested_ASCII_letter_text_or_mathrm",
+      "map_listed_LaTeX_spacing_to_one_space",
+      "reject_remaining_backslash_or_dollar",
+      "map_U2212_to_ASCII_minus",
+      "strip_outer_whitespace",
+      "collapse_numeric_unit_separator_only_when_full_pattern_matches"
+    ],
+    "unit_tokens": [
+      "kg",
+      "g",
+      "mg",
+      "m",
+      "cm",
+      "mm",
+      "km",
+      "s",
+      "ms",
+      "A",
+      "mA",
+      "V",
+      "mV",
+      "N",
+      "J",
+      "W",
+      "C",
+      "T",
+      "Hz",
+      "K",
+      "Pa",
+      "Ω"
+    ],
+    "no_case_folding": true,
+    "no_decimal_value_equivalence": true,
+    "no_unit_conversion": true,
+    "subscript_braces": "preserve_literal"
+  }
+}
+

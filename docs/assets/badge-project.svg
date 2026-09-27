@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="30" viewBox="0 0 128 30" role="img" aria-label="Project: Page">
+  <title>Project: Page</title>
+  <defs><clipPath id="round"><rect width="128" height="30" rx="6"/></clipPath></defs>
+  <g clip-path="url(#round)"><rect width="128" height="30" fill="#293448"/><rect x="68" width="60" height="30" fill="#4065a8"/></g>
+  <g font-family="Arial,Helvetica,sans-serif" font-size="12" text-anchor="middle"><text x="34.0" y="19.5" fill="#edf2fa">Project</text><text x="98.0" y="19.5" fill="#fff" font-weight="600">Page</text></g>
+</svg>

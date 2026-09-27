@@ -1,0 +1,65 @@
+任务阶段：PASS_2_VISUAL_SEMANTIC_BINDING
+
+题干：
+{stem}
+
+问题：
+{query}
+
+PASS 1 结果：
+{pass1_json}
+
+当前任务：
+
+1. 不修改 PASS 1 的 visual_nodes；
+2. 创建被图中图元表示的 physical_nodes；
+3. 建立：
+   - labels：文字标签指向实体；
+   - represents：视觉形状表示物理实体；
+   - same_entity_as：两个图元明确表示同一实体；
+4. 题干只能用于消除视觉歧义和给实体命名；
+5. 本阶段不提取完整物理量；
+6. 本阶段不添加受力、运动规律、几何推导或物理推导；
+7. 没有清晰视觉证据的实体不要创建；
+8. 无法确认的绑定写入 ambiguities。
+
+physical node 类型只允许：
+
+point
+body
+particle
+surface
+inclined_plane
+rod
+rope
+spring
+pulley
+pivot
+trajectory
+force
+velocity
+acceleration
+charge
+electric_field
+magnetic_field
+wire
+junction
+battery
+resistor
+switch
+ammeter
+voltmeter
+capacitor
+coil
+conductor_rod
+event
+system
+unknown_physical
+
+仅输出：
+{
+  "problem_id": "...",
+  "physical_nodes": [...],
+  "bindings": [...],
+  "ambiguities": [...]
+}

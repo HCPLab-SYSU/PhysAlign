@@ -1,0 +1,630 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "physalign_private_v2_1"
+    },
+    "problem_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "logical_probe_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_id": {
+      "enum": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06"
+      ]
+    },
+    "language": {
+      "enum": [
+        "en",
+        "zh"
+      ]
+    },
+    "source_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "collection": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_field": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_file_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "collection",
+          "record_id",
+          "target_field",
+          "source_file_sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "source_hashes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      },
+      "minProperties": 1
+    },
+    "candidate_map": {
+      "type": "object",
+      "patternProperties": {
+        "^E[1-9][0-9]*$": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "entity",
+                "role",
+                "evidence"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 2
+    },
+    "anchor_map": {
+      "type": "object",
+      "patternProperties": {
+        "^R[1-9][0-9]*$": {
+          "type": "object",
+          "properties": {
+            "source_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "observation_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "repair_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "origin": {
+              "type": "object",
+              "properties": {
+                "locator": {
+                  "$ref": "view_bundle.schema.json#/$defs/locator"
+                },
+                "source_version": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "locator",
+                "source_version"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "source_ids",
+            "observation_ids",
+            "repair_refs",
+            "origin"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "gold_targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "entity",
+              "role",
+              "evidence"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "kind",
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "read_targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "anchor_alias": {
+            "type": "string",
+            "pattern": "^R[1-9][0-9]*$"
+          },
+          "observation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 1
+          },
+          "normalizer_id": {
+            "enum": [
+              "ocr_literal_v2_1",
+              "ocr_label_v2_1"
+            ]
+          },
+          "origin_fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "anchor_alias",
+          "observation_id",
+          "expected",
+          "normalizer_id",
+          "origin_fingerprint"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "response_contract": {
+      "type": "object",
+      "properties": {
+        "binding_key": {
+          "enum": [
+            "role",
+            "referent",
+            "owner",
+            "subjects",
+            "endpoint",
+            "evidence"
+          ]
+        },
+        "cardinality": {
+          "enum": [
+            "one",
+            "set"
+          ]
+        },
+        "read_shape": {
+          "enum": [
+            "none",
+            "string",
+            "object_by_anchor"
+          ]
+        },
+        "read_anchor_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "binding_key",
+        "cardinality",
+        "read_shape",
+        "read_anchor_ids"
+      ],
+      "additionalProperties": false
+    },
+    "joint_eligible": {
+      "type": "boolean"
+    },
+    "packet_plan": {
+      "$ref": "packet_plan.schema.json"
+    },
+    "selection_policy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identity_review_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "closure_review_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "instance_review_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "content_root": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "pass5_analysis": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "direct_fact_reference",
+            "entity_reference_only",
+            "not_recorded",
+            "unavailable"
+          ]
+        },
+        "source_fact_step_map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "required": [
+        "status",
+        "source_fact_step_map"
+      ],
+      "additionalProperties": false
+    },
+    "variant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packet_policy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reference_map": {
+      "type": "object",
+      "patternProperties": {
+        "^H[1-9][0-9]*$": {
+          "type": "object",
+          "properties": {
+            "canonical_target": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "entity"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "source_records": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "collection": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "record_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "target_field": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_file_sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "collection",
+                  "record_id",
+                  "target_field",
+                  "source_file_sha256"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "origins": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "locator": {
+                    "$ref": "view_bundle.schema.json#/$defs/locator"
+                  },
+                  "source_version": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "locator",
+                  "source_version"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "identity_review_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "canonical_target",
+            "source_records",
+            "origins",
+            "identity_review_refs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 0
+    },
+    "relation_context": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "canonical_predicate": {
+              "type": "string",
+              "minLength": 1
+            },
+            "missing_side": {
+              "enum": [
+                "subject",
+                "object"
+              ]
+            },
+            "fixed_reference_alias": {
+              "type": "string",
+              "pattern": "^H[1-9][0-9]*$"
+            },
+            "fixed_target": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "entity"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "registry_entry_hash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "public_qualifiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "qualifier_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value": {},
+                  "source_records": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "collection": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "record_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "target_field": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "source_file_sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "collection",
+                        "record_id",
+                        "target_field",
+                        "source_file_sha256"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  },
+                  "rendered": {
+                    "type": "object",
+                    "properties": {
+                      "en": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "zh": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "en",
+                      "zh"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "qualifier_id",
+                  "value",
+                  "source_records",
+                  "rendered"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "closure_review_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "canonical_predicate",
+            "missing_side",
+            "fixed_reference_alias",
+            "fixed_target",
+            "registry_entry_hash",
+            "public_qualifiers",
+            "closure_review_ref"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "problem_id",
+    "logical_probe_id",
+    "instance_id",
+    "task_id",
+    "language",
+    "source_records",
+    "source_hashes",
+    "candidate_map",
+    "anchor_map",
+    "gold_targets",
+    "read_targets",
+    "response_contract",
+    "joint_eligible",
+    "packet_plan",
+    "selection_policy_id",
+    "identity_review_refs",
+    "closure_review_refs",
+    "instance_review_refs",
+    "content_root",
+    "pass5_analysis",
+    "variant_id",
+    "reference_map",
+    "packet_policy_id",
+    "relation_context"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "v2.1 emitted key. H mappings and variant_id are mandatory. Runtime verifies R/E/H/public/source equality. Instance IDs and own review refs are excluded by a fixed content-root projection. No v2 key is silently migrated.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "task_id": {
+            "const": "T05"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "reference_map": {
+            "minProperties": 1
+          },
+          "relation_context": {
+            "type": "object"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "reference_map": {
+            "maxProperties": 0
+          },
+          "relation_context": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ],
+  "$id": "https://physalign.invalid/v2.1/schemas/private_mapping.schema.json"
+}
+

@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' file: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'">
+<title>PhysAlign 转换草稿审核（私有）</title>
+<style>body{font:15px system-ui;margin:24px;background:#f5f6f8;color:#162338}header,section{background:white;border:1px solid #ccd5df;border-radius:10px;padding:18px;margin-bottom:16px}button,select,input,textarea{font:inherit;padding:8px;margin:4px}button{cursor:pointer}textarea{width:95%;min-height:70px}pre{white-space:pre-wrap;overflow-wrap:anywhere}img{max-width:100%;border:1px solid #cbd5e1}#images{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}.warning{color:#a34a00}label{display:block;margin:8px 0}#gold[hidden]{display:none}a{color:#1254ce}.bar{position:sticky;top:0;z-index:2}small{overflow-wrap:anywhere}</style>
+<header class="bar"><h2>PhysAlign 转换草稿审核</h2><p class="warning">私有审核页面，包含金标准，禁止作为被测模型输入。原标注通过 ≠ 新 QA 已通过。</p>
+<select id="filter"><option value="all">全部</option><option value="pending">未审核</option><option value="approved">通过</option><option value="rejected">退回</option></select>
+<select id="task"><option value="all">全部任务</option><option>T01</option><option>T02</option><option>T03</option><option>T04</option><option>T05</option></select>
+<select id="interface" hidden><option value="all">全部原生子接口</option><option>T02-single</option><option>T03-image</option><option>T03-text</option></select><select id="mother" hidden><option value="all">全部开发母题</option></select>
+<button id="prev">上一条</button><button id="next">下一条</button><span id="count"></span>
+<input id="reviewer" placeholder="审核人姓名 / 团队 ID"><button id="download">导出审核 JSON</button><label>导入此前导出的审核 JSON：<input type="file" id="import" accept=".json"></label>
+<small id="status"></small></header>
+<main id="main"><section><h3 id="title"></h3><small id="root"></small><pre id="prompt"></pre><div id="images"></div></section>
+<section><h3>1. 先根据公开输入独立判断</h3><p>填写候选编号及必要的 read（不要先查看金标准）。这只是人工审核记录，不会自动跑分。</p><textarea id="blind" placeholder='例如 {"owner":"E2","read":"m"}'></textarea><button id="reveal">2. 查看金标准与来源</button></section>
+<section id="gold" hidden><h3>2. 对照来源检查</h3><a id="source" target="_blank" rel="noopener">完整 Pass4 来源</a> · <a id="audit" target="_blank" rel="noopener">SourceAdapter 审计报告</a>
+<pre id="truth"></pre><div id="checks"></div><textarea id="note" placeholder="审核意见；不确定时退回，修改来源后重新生成草稿"></textarea>
+<button id="approve">确认本条通过</button><button id="reject">退回本条</button></section></main>
+<script>"use strict";
+const DATA=__REVIEW_DATA__;
+const $=id=>document.getElementById(id), decisions={};let position=0, visible=[], current=null;
+const labels={source_semantics:'来源支持问题语义；没有从 Pass5 / 解答推导金标准',complete_targets:'已检查完整来源，目标集合闭合；没有因筛选、同义谓词或多目标遗漏制造单选',distinct_candidates:'候选实体可区分，身份合并正确；没有靠名称或候选缺失泄露答案',rendered_locations:'已看实际原图与所有定位图，R / E / H 指向精确且不遮挡关键内容',packet_no_binding_leakage:'Gold packet 仅给出独立可读图中文字，不包含绑定结论、答案或语义解释',diagram_asset_scope:'用于 packet / read 的区域确属题图，不是选项图、解答图或无关背景'};
+function notify(s){$('status').textContent=s}
+function rebuild(){visible=DATA.items.filter(x=>($('task').value==='all'||x.task_id===$('task').value)&&($('interface').value==='all'||x.metadata?.interface===$('interface').value)&&($('mother').value==='all'||x.problem_id===$('mother').value)&&($('filter').value==='all'||(decisions[x.logical_probe_id]?.status||'pending')===$('filter').value));position=Math.max(0,Math.min(position,visible.length-1));show()}
+function show(){current=visible[position];$('count').textContent=`${visible.length?position+1:0}/${visible.length}；已审核 ${Object.keys(decisions).length}/${DATA.items.length}`;$('main').hidden=!current;if(!current)return;
+const c=current.core,d=decisions[current.logical_probe_id];$('title').textContent=`${current.problem_id} · ${current.metadata?.interface||current.task_id} · ${current.logical_probe_id.slice(0,16)}`;$('root').textContent='审核绑定版本：'+current.review_target_root;
+$('prompt').textContent=c.public_raw.messages.system+'\n\n'+c.public_raw.messages.user;$('images').replaceChildren();
+for(const id of c.public_raw.attachment_ids){const fig=document.createElement('figure'),cap=document.createElement('figcaption'),img=document.createElement('img');cap.textContent=id;img.src=current.asset_root+'/'+c.assets[id].relative_path;img.alt='定位图 '+id;img.loading='lazy';fig.append(cap,img);$('images').append(fig)}
+$('gold').hidden=true;$('blind').value=d?.blind_answer||'';$('note').value=d?.note||'';$('checks').replaceChildren();for(const name of DATA.confirmations){const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.dataset.name=name;input.checked=d?.confirmations?.[name]===true;label.append(input,document.createTextNode(labels[name]));$('checks').append(label)}
+const k=c.private_core;const aliases=Object.entries(k.candidate_map).filter(([a,t])=>k.gold_targets.some(g=>g.kind===t.kind&&g.id===t.id)).map(([a])=>a);
+$('truth').textContent=JSON.stringify({expected_binding_aliases:aliases,read:k.read_targets,packet:c.gold_view.recognition_packet,source_records:k.source_records,native_diagnostics:current.metadata||null,all_private_mapping:k},null,2);
+$('source').href=current.source_url;$('audit').href=current.audit_url;}
+function decide(status){if(!current)return;if(!$('reviewer').value.trim())return alert('请填写审核人');if(!$('blind').value.trim())return alert('请先记录独立判断');const confirmations={};for(const c of $('checks').querySelectorAll('input'))confirmations[c.dataset.name]=c.checked;
+if(status==='approved'&&Object.values(confirmations).some(x=>!x))return alert('通过前必须逐项确认；不确定请退回');
+decisions[current.logical_probe_id]={logical_probe_id:current.logical_probe_id,review_target_root:current.review_target_root,status,reviewer:$('reviewer').value.trim(),blind_answer:$('blind').value,confirmations,note:$('note').value};notify('已记录于当前页面。请导出审核 JSON 保存；刷新前务必导出。');if(position<visible.length-1)position++;rebuild()}
+$('reveal').onclick=()=>{if(!$('blind').value.trim())return alert('请先填写独立判断');$('gold').hidden=false};$('approve').onclick=()=>decide('approved');$('reject').onclick=()=>decide('rejected');$('prev').onclick=()=>{position=Math.max(0,position-1);show()};$('next').onclick=()=>{position=Math.min(visible.length-1,position+1);show()};$('filter').onchange=$('task').onchange=()=>{position=0;rebuild()};
+$('download').onclick=()=>{const result={schema_version:'physalign_decisions_v1',catalog_root:DATA.catalog_root,decisions:Object.values(decisions)};const url=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='physalign_review_decisions.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('import').onchange=async()=>{try{const f=$('import').files[0];if(!f)return;const d=JSON.parse(await f.text());if(d.schema_version!=='physalign_decisions_v1'||d.catalog_root!==DATA.catalog_root)throw Error('不是本版本的审核文件');const incoming={};for(const x of d.decisions){const item=DATA.items.find(i=>i.logical_probe_id===x.logical_probe_id);if(!item||item.review_target_root!==x.review_target_root||incoming[x.logical_probe_id])throw Error('重复 / 未知 / 过期记录');incoming[x.logical_probe_id]=x}Object.assign(decisions,incoming);rebuild();notify('已导入审核记录')}catch(e){alert(e.message)}};
+if(DATA.native_profile){$('interface').hidden=false;$('mother').hidden=false;for(const pid of [...new Set(DATA.items.map(x=>x.problem_id))].sort()){const o=document.createElement('option');o.value=pid;o.textContent=pid;$('mother').append(o)}document.querySelector('.warning').textContent='原生 profile 开发审核（非随机发布审计）：仅显示预选开发母题的全部探针。全量草稿、packet 均未批准，不支持批量继承或正式发布。此页包含金标准，禁止作为模型输入。'}
+$('interface').onchange=$('mother').onchange=()=>{position=0;rebuild()};
+window.addEventListener('beforeunload',e=>{if(Object.keys(decisions).length){e.preventDefault();e.returnValue=''}});rebuild();
+</script></html>

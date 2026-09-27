@@ -1,0 +1,21 @@
+{
+  "template_version": "localized_v2_1",
+  "language_policy": "source_matched_v1",
+  "zh": {
+    "system": "你正在回答物理题中的一个局部观测与角色绑定问题，不需要求解原题。请使用原图、原始题干、指定位置和候选作答。原题选项是候选命题，不是已知事实。R 编号定位证据，E 编号用于选择候选，H 编号定位已给定的参考实体；编号不表示物理名称、正确性或排序。若要求 read，只读取指定位置的文字，不解释物理含义，不换算单位。补充的局部读取信息只表示该位置的内容，仍需自行判断待测绑定。只返回要求的一个 JSON 对象，不输出解释，不创造编号。",
+    "user": "【原始题干】\n{stem}\n【原始问题】\n{query}\n【原题选项】\n{options}\n【图像与定位视图】\n{attachment_legend}\n【文本定位】\n{text_locator_views}\n【证据位置】\n{anchor_block}\n【给定参考实体】\n{reference_block}\n【候选】\n{candidate_block}\n【局部问题】\n{read_instruction}{binding_question}\n【选择方式】\n{selection_instruction}\n【补充局部读取信息】\n{recognition_packet}\n【输出格式】\n{output_contract}",
+    "one": "只返回一个候选编号。",
+    "set": "返回所有符合条件的候选编号。",
+    "read": "逐字转写 {read_anchors} 中指定的可见文字。",
+    "packet_empty": "无。"
+  },
+  "en": {
+    "system": "You are answering a local observation-and-role-binding question about a physics problem, not solving the original problem. Use the original images and text, the specified locations, and the candidates. Original answer options are candidate propositions, not established facts. R IDs locate evidence, E IDs select candidates, and H IDs locate given reference entities. IDs are not physical names, correctness indicators, or rankings. If read is requested, transcribe only the text at the specified location; do not interpret its physical meaning or convert units. Supplied local readings describe content at those locations; you must still determine the binding being tested. Return exactly one JSON object with the requested fields, without explanations or invented IDs.",
+    "user": "[Original statement]\n{stem}\n[Original question]\n{query}\n[Original answer options]\n{options}\n[Images and locator views]\n{attachment_legend}\n[Text locator views]\n{text_locator_views}\n[Evidence locations]\n{anchor_block}\n[Given reference entities]\n{reference_block}\n[Candidates]\n{candidate_block}\n[Local question]\n{read_instruction}{binding_question}\n[Selection rule]\n{selection_instruction}\n[Local reading information]\n{recognition_packet}\n[Output format]\n{output_contract}",
+    "one": "Return exactly one candidate ID.",
+    "set": "Return all applicable candidate IDs.",
+    "read": "Transcribe the visible text specified at {read_anchors} exactly.",
+    "packet_empty": "None."
+  }
+}
+
