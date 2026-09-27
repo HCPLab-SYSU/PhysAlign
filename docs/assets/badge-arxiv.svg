@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="158" height="30" viewBox="0 0 158 30" role="img" aria-label="arXiv: coming soon">
-  <title>arXiv: coming soon</title>
-  <defs><clipPath id="round"><rect width="158" height="30" rx="6"/></clipPath></defs>
-  <g clip-path="url(#round)"><rect width="158" height="30" fill="#293448"/><rect x="55" width="103" height="30" fill="#a94f53"/></g>
-  <g font-family="Arial,Helvetica,sans-serif" font-size="12" text-anchor="middle"><text x="27.5" y="19.5" fill="#edf2fa">arXiv</text><text x="106.5" y="19.5" fill="#fff" font-weight="600">coming soon</text></g>
-</svg>

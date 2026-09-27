@@ -2,23 +2,32 @@
 
 <h1>PhysAlign</h1>
 
-<h2>PhysAlign: A Benchmark for Evidence-Grounded Role Alignment<br />in Multimodal Physics Reasoning</h2>
+<p><strong>PhysAlign: A Benchmark for Evidence-Grounded Role Alignment in Multimodal Physics Reasoning</strong></p>
 
 <p>
-  <a href="https://arxiv.org/abs/XXXX.XXXXX"><img src="docs/assets/badge-arxiv.svg" alt="arXiv — coming soon (placeholder)" height="30" /></a>
-  <a href="https://huggingface.co/datasets/Jetson888/PhysAlign"><img src="docs/assets/badge-dataset.svg" alt="Hugging Face — dataset" height="30" /></a>
-  <a href="https://physalign-lab.github.io/"><img src="docs/assets/badge-project.svg" alt="Project — page" height="30" /></a>
+  <a href="https://physalign-lab.github.io/"><img src="https://img.shields.io/badge/Project-Page-4f6db8?style=flat-square" alt="Project page" height="20" /></a>
+  <a href="https://huggingface.co/datasets/Jetson888/PhysAlign"><img src="https://img.shields.io/badge/Hugging_Face-Dataset-b88a16?style=flat-square&amp;logo=huggingface&amp;logoColor=white" alt="Hugging Face dataset" height="20" /></a>
+  <img src="https://img.shields.io/badge/Task-Physics_QA-b45353?style=flat-square" alt="Task: Physics QA" height="20" />
+  <img src="https://img.shields.io/badge/Task-Multimodal_Physics_Reasoning-b45353?style=flat-square" alt="Task: Multimodal Physics Reasoning" height="20" />
+  <img src="https://img.shields.io/badge/Benchmark-3%2C341_Probes-4a79b8?style=flat-square" alt="Benchmark: 3,341 probes" height="20" />
 </p>
 
 <p>
+  <a href="#leaderboard"><img src="https://img.shields.io/badge/Model-Qwen3.5--4B-65a30d?style=flat-square" alt="Evaluated model: Qwen3.5-4B" height="20" /></a>
+  <a href="#leaderboard"><img src="https://img.shields.io/badge/Model-Qwen3.5--9B-65a30d?style=flat-square" alt="Evaluated model: Qwen3.5-9B" height="20" /></a>
+  <a href="#leaderboard"><img src="https://img.shields.io/badge/Model-Qwen3.5--27B-65a30d?style=flat-square" alt="Evaluated model: Qwen3.5-27B" height="20" /></a>
+  <a href="#leaderboard"><img src="https://img.shields.io/badge/Model-InternVL3.5--8B-65a30d?style=flat-square" alt="Evaluated model: InternVL3.5-8B" height="20" /></a>
+  <a href="#leaderboard"><img src="https://img.shields.io/badge/Model-GPT--6_Astra-65a30d?style=flat-square" alt="Evaluated model: GPT-6 Astra" height="20" /></a>
+  <a href="#leaderboard"><img src="https://img.shields.io/badge/Model-Gemini_3.8_Flash-65a30d?style=flat-square" alt="Evaluated model: Gemini 3.8 Flash" height="20" /></a>
+</p>
+
+<p><sub>
   <a href="#overview">Overview</a> ·
   <a href="#leaderboard">Leaderboard</a> ·
+  <a href="#benchmark-design">Benchmark Design</a> ·
   <a href="#quick-start">Quick Start</a> ·
-  <a href="#evaluation">Evaluation</a> ·
-  <a href="#citation">Citation</a>
-</p>
-
-<sub>The arXiv link is an explicit placeholder and will be replaced after upload.</sub>
+  <a href="#evaluation">Evaluation</a>
+</sub></p>
 
 </div>
 
@@ -166,7 +175,7 @@ For real runs, use an audited benchmark package and a configured model adapter. 
 2. **Compile and freeze:** Benchmark Kit builds localized probes, separates public inputs from scoring targets, and records review evidence.
 3. **Run and score:** use independent Base/+GT requests, deterministic local metrics, and uncertainty estimates with the declared parent or source-cluster sampling unit.
 
-The code retains the terms **Raw / Gold** for **Base / +GT** and **BAcc** for the paper's grounding metric **GAcc**. Always match the population and weights before comparing numbers; a full-set Base score is not interchangeable with a paired-subset Base score.
+Follow the manuscript terminology when reporting results: **Base / +GT** identify the paired input conditions, while **CAcc / GAcc / JAcc / SolveAcc** identify the reported metrics. Always match the evaluation population and weights before comparing numbers; a full-set Base score is not interchangeable with a paired-subset Base score.
 
 | Task | Documentation |
 | :--- | :--- |
@@ -192,19 +201,6 @@ PhysAlign/
 ├── docs/leaderboard/           # Paper baseline data and interactive local preview
 ├── evaluate.py                # Evaluation CLI
 └── plot_results.py            # Visualization CLI
-```
-
-## Citation
-
-This **provisional citation** will be updated with author information and the arXiv identifier when the preprint is available.
-
-```bibtex
-@misc{physalign2026,
-  title = {{PhysAlign}: A Benchmark for Evidence-Grounded Role Alignment in Multimodal Physics Reasoning},
-  year  = {2026},
-  url   = {https://physalign-lab.github.io/},
-  note  = {Preprint forthcoming; bibliographic metadata to be updated}
-}
 ```
 
 ## License and data use

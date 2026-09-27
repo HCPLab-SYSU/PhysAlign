@@ -26,16 +26,10 @@ python scripts/build_readme.py --check
 node tests/test_leaderboard.js
 ```
 
-The builder updates only the two marked tables in the root README, generates `index.html` from `template.html`, and writes the three local resource badges. Layout and behavior live in `style.css`, `leaderboard-core.js`, and `leaderboard.js`.
-
-When arXiv is available:
-
-1. Replace `links.arxiv` in `results.json` and set `links.arxiv_is_placeholder` to `false`.
-2. Replace the root README's arXiv URL and its placeholder note, and complete the citation metadata.
-3. Run the builder and its consistency check.
+The builder updates only the two marked tables in the root README, generates `index.html` from `template.html`, and writes the two local resource badges. Layout and behavior live in `style.css`, `leaderboard-core.js`, and `leaderboard.js`.
 
 Keep population counts and provenance with any additional model results. New results evaluated on test only or on different subsets belong in a separately labeled view; they must not silently enter the current paper ranking.
 
 ## Visual design
 
-The README uses GitHub-compatible Markdown/HTML, original manuscript figures, and three self-contained SVG resource badges. Figure provenance is recorded in [the asset notes](../assets/README.md). The local preview uses dark navy surfaces, precise typography and spacing inspired by Linear, and the structured data hierarchy of IBM's design template from the `popular-web-designs` skill. The accent colors are cyan for local evidence and violet for role grounding. No CSS or interactive script is required by the GitHub README itself.
+The README uses GitHub-compatible Markdown/HTML, original manuscript figures, and compact resource and model badges. Figure provenance is recorded in [the asset notes](../assets/README.md). The local preview uses dark navy surfaces, precise typography and spacing inspired by Linear, and the structured data hierarchy of IBM's design template from the `popular-web-designs` skill. The accent colors are cyan for local evidence and violet for role grounding. No CSS or interactive script is required by the GitHub README itself.

@@ -27,7 +27,7 @@ def validate(data):
             raise ValueError("Joint correctness cannot exceed either same-set marginal")
         if abs(model["paired"]["gt"] - model["paired"]["base"] - model["paired"]["delta_pp"]) > 0.011:
             raise ValueError("Paired delta exceeds the independently rounded tolerance")
-    for key in ("arxiv", "dataset", "project"):
+    for key in ("dataset", "project"):
         if not data["links"][key].startswith("https://"):
             raise ValueError("Project links must use HTTPS")
 
@@ -114,10 +114,8 @@ def outputs(data):
     substitutions = {
         "DATA": json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c"),
         "TABLE_HEAD": head, "TABLE_ROWS": rows,
-        "ARXIV": escape(data["links"]["arxiv"], quote=True),
         "PROJECT": escape(data["links"]["project"], quote=True),
         "DATASET": escape(data["links"]["dataset"], quote=True),
-        "ARXIV_STATUS": "coming soon (placeholder)" if data["links"]["arxiv_is_placeholder"] else "paper",
     }
     for key, value in substitutions.items():
         template = template.replace("@@" + key + "@@", value)
@@ -126,7 +124,6 @@ def outputs(data):
     return {
         ROOT / "README.md": readme,
         ROOT / "docs/leaderboard/index.html": template,
-        ROOT / "docs/assets/badge-arxiv.svg": badge("arXiv", "coming soon" if data["links"]["arxiv_is_placeholder"] else "paper", "#a94f53", 55, 103),
         ROOT / "docs/assets/badge-dataset.svg": badge("Hugging Face", "Dataset", "#927014", 104, 74),
         ROOT / "docs/assets/badge-project.svg": badge("Project", "Page", "#4065a8", 68, 60),
     }
