@@ -11,6 +11,7 @@
     "rounding": "Values are transcribed from Table 2. Paired deltas are independently rounded in the paper."
   },
   "links": {
+    "arxiv": "https://arxiv.org/abs/2609.33319",
     "dataset": "https://huggingface.co/datasets/Jetson888/PhysAlign",
     "project": "https://physalign-lab.github.io/"
   },

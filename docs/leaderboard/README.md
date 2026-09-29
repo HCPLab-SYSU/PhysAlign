@@ -26,7 +26,7 @@ python scripts/build_readme.py --check
 node tests/test_leaderboard.js
 ```
 
-The builder updates only the two marked tables in the root README, generates `index.html` from `template.html`, and writes the two local resource badges. Layout and behavior live in `style.css`, `leaderboard-core.js`, and `leaderboard.js`.
+The builder updates only the two marked tables in the root README, generates `index.html` from `template.html`, and writes the two local resource badges. Project, dataset, and paper links are maintained in `results.json`. Layout and behavior live in `style.css`, `leaderboard-core.js`, and `leaderboard.js`.
 
 Keep population counts and provenance with any additional model results. New results evaluated on test only or on different subsets belong in a separately labeled view; they must not silently enter the current paper ranking.
 

@@ -5,6 +5,7 @@
 <p><strong>PhysAlign: A Benchmark for Evidence-Grounded Role Alignment in Multimodal Physics Reasoning</strong></p>
 
 <p>
+  <a href="https://arxiv.org/abs/2609.33319"><img src="https://img.shields.io/badge/arXiv-2609.33319-b31b1b?style=flat-square&amp;logo=arxiv&amp;logoColor=white" alt="arXiv: 2609.33319" height="20" /></a>
   <a href="https://physalign-lab.github.io/"><img src="https://img.shields.io/badge/Project-Page-4f6db8?style=flat-square" alt="Project page" height="20" /></a>
   <a href="https://huggingface.co/datasets/Jetson888/PhysAlign"><img src="https://img.shields.io/badge/Hugging_Face-Dataset-b88a16?style=flat-square&amp;logo=huggingface&amp;logoColor=white" alt="Hugging Face dataset" height="20" /></a>
   <img src="https://img.shields.io/badge/Task-Physics_QA-b45353?style=flat-square" alt="Task: Physics QA" height="20" />
@@ -26,7 +27,8 @@
   <a href="#leaderboard">Leaderboard</a> ·
   <a href="#benchmark-design">Benchmark Design</a> ·
   <a href="#quick-start">Quick Start</a> ·
-  <a href="#evaluation">Evaluation</a>
+  <a href="#evaluation">Evaluation</a> ·
+  <a href="#citation">Citation</a>
 </sub></p>
 
 </div>
@@ -201,6 +203,22 @@ PhysAlign/
 ├── docs/leaderboard/           # Paper baseline data and interactive local preview
 ├── evaluate.py                # Evaluation CLI
 └── plot_results.py            # Visualization CLI
+```
+
+## Citation
+
+If you use PhysAlign in your research, please cite:
+
+```bibtex
+@misc{liang2026physalignbenchmarkevidencegroundedrole,
+  title        = {PhysAlign: A Benchmark for Evidence-Grounded Role Alignment in Multimodal Physics Reasoning},
+  author       = {Kecheng Liang and Haoyang Liu and Zexin Chen and Zirong Liu and Weixing Chen and Qiufeng Wang and Yang Liu and Liang Lin},
+  year         = {2026},
+  eprint       = {2609.33319},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.AI},
+  url          = {https://arxiv.org/abs/2609.33319}
+}
 ```
 
 ## License and data use
